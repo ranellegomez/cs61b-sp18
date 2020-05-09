@@ -101,6 +101,7 @@ public class IntList {
      * * elements of B.  May NOT modify items of A.  Use 'new'.
      */
     public static IntList catenate(IntList A, IntList B) {
+        /** This may have caused the AG to run for a long time. */
         if (A == null) {
             return B;
         }
@@ -110,12 +111,18 @@ public class IntList {
         IntList resultPtr = new IntList(A.first, null);
         IntList result = resultPtr;
         while (A.rest != null) {
-            resultPtr.rest = new IntList(A.first, null);
+            resultPtr.rest = new IntList(A.rest.first, null);
+            resultPtr = resultPtr.rest;
+            A = A.rest;
         }
+        resultPtr.rest = new IntList(B.first, null);
+        resultPtr = resultPtr.rest;
         while (B.rest != null) {
-            resultPtr.rest = new IntList(B.first, null);
+            resultPtr.rest = new IntList(B.rest.first, null);
+            resultPtr = resultPtr.rest;
+             B = B.rest;
         }
-        return resultPtr;
+        return result;
     }
 
 
