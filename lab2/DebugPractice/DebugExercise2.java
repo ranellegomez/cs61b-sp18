@@ -11,27 +11,6 @@ public class DebugExercise2 {
         return Math.max(a, b);
     }
 
-
-    /** Returns the sum of a and b. Do not step into this function. 
-      * This function may have a bug, but if it does, you should find it
-      * by stepping over, not into. */    
-    public static int add(int a, int b) {
-        int x = a, y = b;
-        /* If you're stepping into this function, click the
-           step out button because you're not going to learn anything. */
-        int xor, and, temp;
-        and = x & y;
-        xor = x ^ y;
-
-        while (and != 0) {
-            and <<= 1;
-            temp = xor ^ and;
-            and &= xor;
-            xor = temp;
-        }
-        return xor;
-    }
-
     /** Returns a new array where entry i is the max of
      * a[i] and b[i]. For example, if a = {1, -10, 3}
      * and b = {0, 20, 5}, this function will return {1, 20, 5}.
