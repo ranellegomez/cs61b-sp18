@@ -17,6 +17,9 @@ public class Planet {
     /** The name of the file that corresponds to my image. */
     public String imgFileName;
 
+    /** The constant G used to calculate gravitational force. */
+    public static double G = 6.67e-11;
+
     /** My constructor. */
     public Planet(double xP, double yP, double xV, double yV, double m,
                   String img) {
@@ -42,6 +45,11 @@ public class Planet {
     public double calcDistance(Planet p) {
         return Math.sqrt(Math.pow(p.xxPos - xxPos, 2)
                                  + Math.pow(p.yyPos - yyPos, 2));
+    }
+
+    /** Calculates the force exerted by me on Planet P. */
+    public double calcForceExertedBy(Planet p) {
+        return (G * mass * p.mass) / Math.pow(calcDistance(p), 2);
     }
 
 }
