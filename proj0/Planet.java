@@ -1,26 +1,42 @@
 public class Planet {
-    /** My current x position. */
+    /**
+     * My current x position.
+     */
     public double xxPos;
 
-    /** My current y position. */
+    /**
+     * My current y position.
+     */
     public double yyPos;
 
-    /** My current velocity in the x-direction. */
+    /**
+     * My current velocity in the x-direction.
+     */
     public double xxVel;
 
-    /** My current velocity in the y-direction. */
+    /**
+     * My current velocity in the y-direction.
+     */
     public double yyVel;
 
-    /** My mass */
+    /**
+     * My mass
+     */
     public double mass;
 
-    /** The name of the file that corresponds to my image. */
+    /**
+     * The name of the file that corresponds to my image.
+     */
     public String imgFileName;
 
-    /** The constant G used to calculate gravitational force. */
+    /**
+     * The constant G used to calculate gravitational force.
+     */
     public static double G = 6.67e-11;
 
-    /** My constructor. */
+    /**
+     * My constructor.
+     */
     public Planet(double xP, double yP, double xV, double yV, double m,
                   String img) {
         xxPos = xP;
@@ -31,7 +47,9 @@ public class Planet {
         imgFileName = img;
     }
 
-    /** A copy constructor that sets my instance variables to Planet p's. */
+    /**
+     * A copy constructor that sets my instance variables to Planet p's.
+     */
     public Planet(Planet p) {
         xxPos = p.xxPos;
         yyPos = p.yyPos;
@@ -41,15 +59,35 @@ public class Planet {
         imgFileName = p.imgFileName;
     }
 
-    /** Calculates the distance between two planets, given a Planet P */
+    /**
+     * Calculates the distance between two planets, given a Planet P
+     */
     public double calcDistance(Planet p) {
         return Math.sqrt(Math.pow(p.xxPos - xxPos, 2)
                                  + Math.pow(p.yyPos - yyPos, 2));
     }
 
-    /** Calculates the force exerted by me on Planet P. */
+    /**
+     * Calculates the force exerted by me on Planet P.
+     */
     public double calcForceExertedBy(Planet p) {
         return (G * mass * p.mass) / Math.pow(calcDistance(p), 2);
+    }
+
+    /**
+     * Calculates the x-direction force exerted by me on Planet P.
+     */
+    public double calcForceExertedByX(Planet p) {
+        double angle = Math.atan((p.yyPos - yyPos) / (p.xxPos - xxPos));
+        return calcForceExertedBy(p) * Math.cos(angle);
+    }
+
+    /**
+     * Calculates the y-direction force exerted by me on Planet P.
+     */
+    public double calcForceExertedByY(Planet p) {
+        double angle = Math.atan((p.yyPos - yyPos) / (p.xxPos - xxPos));
+        return calcForceExertedBy(p) * Math.sin(angle);
     }
 
 }
