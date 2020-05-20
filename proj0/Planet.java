@@ -38,4 +38,10 @@ public class Planet {
         imgFileName = p.imgFileName;
     }
 
+    /** Calculates the distance between two planets, given a Planet P */
+    public double calcDistance(Planet p) {
+        return Math.sqrt(Math.pow(p.xxPos - xxPos, 2)
+                                 - Math.pow(p.yyPos - yyPos, 2));
+    }
+
 }
