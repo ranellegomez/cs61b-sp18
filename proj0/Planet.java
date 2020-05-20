@@ -90,4 +90,30 @@ public class Planet {
         return calcForceExertedBy(p) * Math.sin(angle);
     }
 
+    /**
+     * Calculates the x-direction net force exerted by me on Planet[] P.
+     */
+    public double calcNetForceExertedByX(Planet[] planets) {
+        double xNetForce = 0;
+        for (Planet p : planets) {
+            if (!p.equals(this)) {
+                xNetForce += calcForceExertedByX(p);
+            }
+        }
+        return xNetForce;
+    }
+
+    /**
+     * Calculates the x-direction net force exerted by me on Planet[] P.
+     */
+    public double calcNetForceExertedByY(Planet[] planets) {
+        double yNetForce = 0;
+        for (Planet p : planets) {
+            if (!p.equals(this)) {
+                yNetForce += calcForceExertedByY(p);
+            }
+        }
+        return yNetForce;
+    }
+
 }
