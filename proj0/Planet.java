@@ -116,4 +116,18 @@ public class Planet {
         return yNetForce;
     }
 
+    /** Determines how much the forces exerted on the planet will cause that
+     * planet to accelerate, and the resulting change in the planet’s velocity
+     * and position in a small period of time dt.
+     */
+    public void update(double time, double xForce, double yForce) {
+        double xAcceleration = xForce / mass;
+        double yAcceleration = yForce / mass;
+
+        xxVel += time * xAcceleration;
+        yyVel += time * yAcceleration;
+
+        xxPos += time * xxVel;
+        yyPos += time * yyVel;
+    }
 }
