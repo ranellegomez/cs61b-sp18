@@ -28,6 +28,7 @@ public class NBody {
             int lineNumber = 2;
             int planetCount = 0;
             String fileLine = Files.readAllLines(Paths.get(filePath)).get(lineNumber);
+            planetArray = new Planet[5];
             HashMap<String, Planet> planetHashMap = new HashMap<>();
 
             while (fileLine != null && isNumeric((fileLine.trim().split(
@@ -46,26 +47,10 @@ public class NBody {
                         Files.readAllLines(Paths.get(filePath)).get(lineNumber++);
                 planetCount++;
             }
-            lineNumber = 2;
-            fileLine = Files.readAllLines(Paths.get(filePath)).get(lineNumber);
-            planetArray = new Planet[5];
-            for (int j = 0; j < 5; j++) {
-                fileLine = fileLine.trim();
-                String[] planetInfo = fileLine.split("\\s+");
-                Planet p = new Planet(Double.parseDouble(planetInfo[0]),
-                                      Double.parseDouble(planetInfo[1]),
-                                      Double.parseDouble(planetInfo[2]),
-                                      Double.parseDouble(planetInfo[3]),
-                                      Double.parseDouble(planetInfo[4]),
-                                      planetInfo[5]);
-                planetArray[j] = p;
-                fileLine = Files.readAllLines(Paths.get(filePath)).get(lineNumber++);
-            }
             int i = 0;
             for (Planet p: planetHashMap.values()) {
                 planetArray[i] = p;
                 i++;
-
             }
             return planetArray;
         } catch (IOException e) {
@@ -73,12 +58,13 @@ public class NBody {
         }
     }
 
-    public static boolean isNumeric(String strNum) {
-        if (strNum == null) {
+    /** Takes a String S and returns whether it is a number. */
+    public static boolean isNumeric(String s) {
+        if (s == null) {
             return false;
         }
         try {
-            double d = Double.parseDouble(strNum);
+            double d = Double.parseDouble(s);
         } catch (NumberFormatException nfe) {
             return false;
         }
