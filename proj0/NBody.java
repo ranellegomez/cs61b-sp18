@@ -2,11 +2,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+=======
+>>>>>>> parent of 9aabdc5... og readPlanets
 
 public class NBody {
 
@@ -19,6 +22,7 @@ public class NBody {
             return 0;
         }
     }
+<<<<<<< HEAD
 
     /** Given a String FILEPATH, returns an array of planets inside the file.
      * public Planet(double xP, double yP, double xV, double yV, double m,
@@ -114,4 +118,6 @@ public class NBody {
         }
         StdDraw.show();
     }
+=======
+>>>>>>> parent of 9aabdc5... og readPlanets
 }
