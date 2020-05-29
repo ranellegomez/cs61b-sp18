@@ -118,6 +118,4 @@ public class NBody {
         }
         StdDraw.show();
     }
-=======
->>>>>>> parent of 9aabdc5... og readPlanets
 }
