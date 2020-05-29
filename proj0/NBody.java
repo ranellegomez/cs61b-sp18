@@ -1,12 +1,7 @@
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 
 
 public class NBody {
@@ -77,9 +72,6 @@ public class NBody {
      * T  and DT and the third argument as a String FILENAME.
      */
     public static void main(String[] args) {
-        //String commandLine = args.trim();
-        //String[] commands = commandLine.split("\\s+");
-        //assert (isNumeric(commands[0]) && isNumeric(commands[1]));
         double T = Double.parseDouble(args[0]);
         double dt = Double.parseDouble(args[1]);
         String fileName = args[2];
