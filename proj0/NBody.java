@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class NBody {
@@ -28,7 +29,8 @@ public class NBody {
             int lineNumber = 2;
             String fileLine = Files.readAllLines(Paths.get(filePath)).get(lineNumber);
             planetArray = new Planet[5];
-            HashMap<String, Planet> planetHashMap = new HashMap<>();
+            HashMap<String, Planet> planetHashMap = new HashMap<String, Planet>();
+            HashSet<Planet> planetSet = new HashSet<>();
 
             while (fileLine != null && isNumeric((fileLine.trim().split(
                     "\\s+")[0]))) {
@@ -36,15 +38,19 @@ public class NBody {
                 fileLine = fileLine.trim();
                 System.out.println(fileLine);
                 String[] planetInfo = fileLine.split("\\s+");
+                System.out.println(Arrays.toString(planetInfo));
                 Planet p = new Planet(Double.parseDouble(planetInfo[0]),
                                       Double.parseDouble(planetInfo[1]),
                                       Double.parseDouble(planetInfo[2]),
                                       Double.parseDouble(planetInfo[3]),
                                       Double.parseDouble(planetInfo[4]),
                                       planetInfo[5]);
-                planetHashMap.put(p.imgFileName, p);
-                for (Planet pep: planetHashMap.values()) {
+                if (!planetSet.contains(p)) {
+                    planetSet.add(p);
+                }
+                for (Planet pep: planetSet) {
                     System.out.println(pep.imgFileName);
+
                     // need to debug this. Puts venus 5x.
                     /**
                     venus.gif
