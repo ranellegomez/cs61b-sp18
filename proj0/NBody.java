@@ -26,7 +26,6 @@ public class NBody {
         try {
             Planet[] planetArray;
             int lineNumber = 2;
-            int planetCount = 0;
             String fileLine = Files.readAllLines(Paths.get(filePath)).get(lineNumber);
             planetArray = new Planet[5];
             HashMap<String, Planet> planetHashMap = new HashMap<>();
@@ -35,6 +34,7 @@ public class NBody {
                     "\\s+")[0]))) {
 
                 fileLine = fileLine.trim();
+                System.out.println(fileLine);
                 String[] planetInfo = fileLine.split("\\s+");
                 Planet p = new Planet(Double.parseDouble(planetInfo[0]),
                                       Double.parseDouble(planetInfo[1]),
@@ -42,10 +42,21 @@ public class NBody {
                                       Double.parseDouble(planetInfo[3]),
                                       Double.parseDouble(planetInfo[4]),
                                       planetInfo[5]);
-                planetHashMap.put(planetInfo[5], p);
+                planetHashMap.put(p.imgFileName, p);
+                for (Planet pep: planetHashMap.values()) {
+                    System.out.println(pep.imgFileName);
+                    // need to debug this. Puts venus 5x.
+                    /**
+                    venus.gif
+                    venus.gif
+                    venus.gif
+                    venus.gif
+                    venus.gif
+                     */
+
+                }
                 fileLine =
                         Files.readAllLines(Paths.get(filePath)).get(lineNumber++);
-                planetCount++;
             }
             int i = 0;
             for (Planet p: planetHashMap.values()) {
@@ -69,5 +80,32 @@ public class NBody {
             return false;
         }
         return true;
+    }
+
+    /** Stores the first two command-line arguments respectively as doubles
+     * T  and DT and the third argument as a String FILENAME.
+     */
+    public static void main(String[] args) {
+        //String commandLine = args.trim();
+        //String[] commands = commandLine.split("\\s+");
+        //assert (isNumeric(commands[0]) && isNumeric(commands[1]));
+        double T = Double.parseDouble(args[0]);
+        double dt = Double.parseDouble(args[1]);
+        String fileName = args[2];
+        Planet[] planets = readPlanets(fileName);
+        double radius = readRadius(fileName);
+
+        StdDraw.setScale(-radius, radius);
+        StdDraw.clear();
+
+        StdDraw.picture(-radius, radius, "images/starfield.jpg");
+        StdDraw.picture(radius, radius, "images/starfield.jpg");
+        StdDraw.picture(-radius, -radius, "images/starfield.jpg");
+        StdDraw.picture(radius, -radius, "images/starfield.jpg");
+
+        for (Planet p: planets) {
+            StdDraw.picture(p.xxPos, p.yyPos, "images/" + p.imgFileName);
+        }
+        StdDraw.show();
     }
 }

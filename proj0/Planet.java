@@ -2,32 +2,32 @@ public class Planet {
     /**
      * My current x position.
      */
-    public double xxPos;
+    public static double xxPos;
 
     /**
      * My current y position.
      */
-    public double yyPos;
+    public static double yyPos;
 
     /**
      * My current velocity in the x-direction.
      */
-    public double xxVel;
+    public static double xxVel;
 
     /**
      * My current velocity in the y-direction.
      */
-    public double yyVel;
+    public static double yyVel;
 
     /**
      * My mass
      */
-    public double mass;
+    public static double mass;
 
     /**
      * The name of the file that corresponds to my image.
      */
-    public String imgFileName;
+    public static String imgFileName;
 
     /**
      * The constant G used to calculate gravitational force.
@@ -57,6 +57,10 @@ public class Planet {
         yyVel = p.yyVel;
         mass = p.mass;
         imgFileName = p.imgFileName;
+    }
+
+    public static void draw() {
+        StdDraw.picture(xxPos, yyPos, "images/" + imgFileName);
     }
 
     /**
