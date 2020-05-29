@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+
 public class NBody {
 
     /** Returns the radius of the inputed universe file. */
@@ -22,12 +23,16 @@ public class NBody {
 
     /** Given a String FILEPATH, returns an array of planets inside the file.
      * public Planet(double xP, double yP, double xV, double yV, double m,
-     *                   String img) */
+     *                   String img)
+     * https://stackoverflow.com/questions/19843506/why-does-my-arraylist-contain-n-copies-of-the-last-item-added-to-the-list
+     *
+     *
+     *
+     *                   */
     public static Planet[] readPlanets(String filePath) {
         try {
-            Planet[] planetArray;
+            Planet[] planetArray = new Planet[5];
             int lineNumber = 2;
-            int planetCount = 0;
             String fileLine = Files.readAllLines(Paths.get(filePath)).get(lineNumber);
             HashMap<String, Planet> planetHashMap = new HashMap<>();
 
@@ -45,28 +50,10 @@ public class NBody {
                 planetHashMap.put(planetInfo[5], p);
                 fileLine =
                         Files.readAllLines(Paths.get(filePath)).get(lineNumber++);
-                planetCount++;
-            }
-            lineNumber = 2;
-            fileLine = Files.readAllLines(Paths.get(filePath)).get(lineNumber);
-            planetArray = new Planet[5];
-            for (int j = 0; j < 5; j++) {
-                fileLine = fileLine.trim();
-                String[] planetInfo = fileLine.split("\\s+");
-                Planet p = new Planet(Double.parseDouble(planetInfo[0]),
-                                      Double.parseDouble(planetInfo[1]),
-                                      Double.parseDouble(planetInfo[2]),
-                                      Double.parseDouble(planetInfo[3]),
-                                      Double.parseDouble(planetInfo[4]),
-                                      planetInfo[5]);
-                planetArray[j] = p;
-                fileLine = Files.readAllLines(Paths.get(filePath)).get(lineNumber++);
             }
             int i = 0;
             for (Planet p: planetHashMap.values()) {
-                planetArray[i] = p;
-                i++;
-
+                planetArray[i++] = p;
             }
             return planetArray;
         } catch (IOException e) {
@@ -74,13 +61,12 @@ public class NBody {
         }
     }
 
-    /** Takes a String S and returns whether it is a number. */
-    public static boolean isNumeric(String s) {
-        if (s == null) {
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
             return false;
         }
         try {
-            double d = Double.parseDouble(s);
+            double d = Double.parseDouble(strNum);
         } catch (NumberFormatException nfe) {
             return false;
         }
@@ -114,4 +100,3 @@ public class NBody {
         StdDraw.show();
     }
 }
-

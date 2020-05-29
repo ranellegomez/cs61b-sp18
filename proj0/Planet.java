@@ -2,32 +2,32 @@ public class Planet {
     /**
      * My current x position.
      */
-    public static double xxPos;
+    public double xxPos;
 
     /**
      * My current y position.
      */
-    public static double yyPos;
+    public double yyPos;
 
     /**
      * My current velocity in the x-direction.
      */
-    public static double xxVel;
+    public double xxVel;
 
     /**
      * My current velocity in the y-direction.
      */
-    public static double yyVel;
+    public double yyVel;
 
     /**
      * My mass
      */
-    public static double mass;
+    public double mass;
 
     /**
      * The name of the file that corresponds to my image.
      */
-    public static String imgFileName;
+    public String imgFileName;
 
     /**
      * The constant G used to calculate gravitational force.
@@ -59,9 +59,6 @@ public class Planet {
         imgFileName = p.imgFileName;
     }
 
-    public static void draw() {
-        StdDraw.picture(xxPos, yyPos, "images/" + imgFileName);
-    }
 
     /**
      * Calculates the distance between two planets, given a Planet P
