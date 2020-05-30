@@ -42,7 +42,7 @@ public class NBody {
                                       Double.parseDouble(planetInfo[4]),
                                       planetInfo[5]);
                 planetHashMap.put(planetInfo[5], p);
-
+                lineNumber += 1;
                 if (Files.readAllLines(Paths.get(filePath))
                         .get(lineNumber) != null && lineNumber
                         < Files.readAllLines(Paths.get(filePath)).size()) {
@@ -51,7 +51,6 @@ public class NBody {
                 } else {
                     break;
                 }
-                lineNumber += 1;
             }
             Planet[] planetArray =
                     new Planet[planetHashMap.values().toArray().length];
