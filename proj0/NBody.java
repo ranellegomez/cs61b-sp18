@@ -33,9 +33,9 @@ public class NBody {
 
             while (fileLine != null && isNumeric((fileLine.trim().split(
                     "\\s+")[0]))) {
-
                 fileLine = fileLine.trim();
                 String[] planetInfo = fileLine.split("\\s+");
+
                 if (planetInfo.length == 6) {
                     Planet p = new Planet(Double.parseDouble(planetInfo[0]),
                                           Double.parseDouble(planetInfo[1]),
@@ -67,7 +67,7 @@ public class NBody {
                 }
             }
             return planetArray;
-        } catch (IOException e) {
+        } catch (IOException | IndexOutOfBoundsException e) {
             return null;
         }
     }
