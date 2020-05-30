@@ -88,7 +88,50 @@ public class NBody {
 
         for (Planet p: planets) {
             StdDraw.picture(p.xxPos, p.yyPos, "images/" + p.imgFileName);
+            /*
+            System.out.println(p.imgFileName);
+            System.out.println(p.xxPos + " " + p.yyPos + " " + p.xxVel + " " + p.yyVel);
+
+             */
         }
         StdDraw.show();
+        StdDraw.enableDoubleBuffering();
+
+        for (int t = 0; t < T; t += dt) {
+            double[] xForces = new double[planets.length];
+            double[] yForces = new double[planets.length];
+
+            for (int i = 0; i < planets.length; i++) {
+                xForces[i] = planets[i].calcNetForceExertedByX(planets);
+                yForces[i] = planets[i].calcNetForceExertedByY(planets);
+                if (xForces[i] < 0) {
+                    System.out.println("xforces less than 0: " + xForces[i]);
+                    System.out.println("yforces less than 0:" + yForces[i]);
+                }
+            }
+            for (int j = 0; j < planets.length; j++) {
+                planets[j].update(dt, xForces[j], yForces[j]);
+            }
+            StdDraw.setScale(-radius, radius);
+            StdDraw.clear();
+
+            StdDraw.picture(-radius, radius, "images/starfield.jpg");
+            StdDraw.picture(radius, radius, "images/starfield.jpg");
+            StdDraw.picture(-radius, -radius, "images/starfield.jpg");
+            StdDraw.picture(radius, -radius, "images/starfield.jpg");
+
+            for (Planet p: planets) {
+                StdDraw.picture(p.xxPos, p.yyPos, "images/" + p.imgFileName);
+            }
+            StdDraw.show();
+            StdDraw.pause(1);
+        }
+        StdOut.printf("%d\n", planets.length);
+        StdOut.printf("%.2e\n", radius);
+        for (int i = 0; i < planets.length; i++) {
+            StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
+                          planets[i].xxPos, planets[i].yyPos, planets[i].xxVel,
+                          planets[i].yyVel, planets[i].mass, planets[i].imgFileName);
+        }
     }
 }

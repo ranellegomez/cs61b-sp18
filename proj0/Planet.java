@@ -79,8 +79,12 @@ public class Planet {
      * Calculates the x-direction force exerted by me on Planet P.
      */
     public double calcForceExertedByX(Planet p) {
-        double angle = Math.atan((p.yyPos - yyPos) / (p.xxPos - xxPos));
-        return calcForceExertedBy(p) * Math.cos(angle);
+        //double angle = Math.atan((p.yyPos - yyPos) / (p.xxPos - xxPos));
+        //double angle = Math.atan2(p.yyPos, p.xxPos) - Math.atan2(yyPos,
+        // xxPos);
+        //System.out.println(Math.cos(angle));
+        //return calcForceExertedBy(p) * Math.cos(Math.toDegrees(angle));
+        return calcForceExertedBy(p) * (p.xxPos - xxPos) / calcDistance(p);
     }
 
     /**
@@ -88,7 +92,9 @@ public class Planet {
      */
     public double calcForceExertedByY(Planet p) {
         double angle = Math.atan((p.yyPos - yyPos) / (p.xxPos - xxPos));
-        return calcForceExertedBy(p) * Math.sin(angle);
+        System.out.println(Math.sin(angle));
+        //return calcForceExertedBy(p) * Math.sin(angle) / calcDistance(p);
+        return calcForceExertedBy(p) * (p.yyPos - yyPos) / calcDistance(p);
     }
 
     /**
@@ -97,7 +103,7 @@ public class Planet {
     public double calcNetForceExertedByX(Planet[] planets) {
         double xNetForce = 0;
         for (Planet p : planets) {
-            if (!p.equals(this)) {
+            if (!p.equals(this)) { //!p.equals(this)
                 xNetForce += calcForceExertedByX(p);
             }
         }
