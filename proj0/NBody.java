@@ -78,7 +78,6 @@ public class NBody {
                     }
                 }
             }
-            System.out.println(planetNamesOrderings);
             return planetArray;
         } catch (IOException e) {
             return null;
