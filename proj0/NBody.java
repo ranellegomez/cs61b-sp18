@@ -43,12 +43,20 @@ public class NBody {
                                       planetInfo[5]);
                 planetHashMap.put(planetInfo[5], p);
                 lineNumber += 1;
+                /**
                 if (Files.readAllLines(Paths.get(filePath))
                         .get(lineNumber) != null && lineNumber
                         < Files.readAllLines(Paths.get(filePath)).size()) {
                     fileLine =
                             Files.readAllLines(Paths.get(filePath)).get(lineNumber);
                 } else {
+                    break;
+                }
+                 */ 
+                try {
+                    fileLine =
+                            Files.readAllLines(Paths.get(filePath)).get(lineNumber);
+                } catch(IndexOutOfBoundsException e) {
                     break;
                 }
             }
