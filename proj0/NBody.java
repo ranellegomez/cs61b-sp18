@@ -1,7 +1,11 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 
 public class NBody {
@@ -29,6 +33,7 @@ public class NBody {
             int lineNumber = 2;
             String fileLine = Files.readAllLines(Paths.get(filePath)).get(lineNumber);
             HashMap<String, Planet> planetHashMap = new HashMap<>();
+            Set<String> planetNamesOrderings = new LinkedHashSet<>();
 
             while (fileLine != null && isNumeric((fileLine.trim().split(
                     "\\s+")[0]))) {
@@ -41,18 +46,21 @@ public class NBody {
                                       Double.parseDouble(planetInfo[3]),
                                       Double.parseDouble(planetInfo[4]),
                                       planetInfo[5]);
-                planetHashMap.put(planetInfo[5], p);
+                if (!planetNamesOrderings.contains(p.imgFileName)) {
+                    planetNamesOrderings.add(p.imgFileName);
+                }
+                planetHashMap.put(p.imgFileName, p);
                 lineNumber += 1;
                 /**
-                if (Files.readAllLines(Paths.get(filePath))
-                        .get(lineNumber) != null && lineNumber
-                        < Files.readAllLines(Paths.get(filePath)).size()) {
-                    fileLine =
-                            Files.readAllLines(Paths.get(filePath)).get(lineNumber);
-                } else {
-                    break;
-                }
-                 */ 
+                 if (Files.readAllLines(Paths.get(filePath))
+                 .get(lineNumber) != null && lineNumber
+                 < Files.readAllLines(Paths.get(filePath)).size()) {
+                 fileLine =
+                 Files.readAllLines(Paths.get(filePath)).get(lineNumber);
+                 } else {
+                 break;
+                 }
+                 */
                 try {
                     fileLine =
                             Files.readAllLines(Paths.get(filePath)).get(lineNumber);
@@ -64,8 +72,13 @@ public class NBody {
                     new Planet[planetHashMap.values().toArray().length];
             int i = 0;
             for (Planet p: planetHashMap.values()) {
-                planetArray[i++] = p;
+                for (String planetName : planetNamesOrderings) {
+                    if (planetName.equals(p.imgFileName)) {
+                        planetArray[i++] = p;
+                    }
+                }
             }
+            System.out.println(planetNamesOrderings);
             return planetArray;
         } catch (IOException e) {
             return null;
