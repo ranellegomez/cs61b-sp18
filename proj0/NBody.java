@@ -22,8 +22,6 @@ public class NBody {
     /** Given a String FILEPATH, returns an array of planets inside the file.
      * public Planet(double xP, double yP, double xV, double yV, double m,
      *                   String img)
-     * https://stackoverflow.com/questions/19843506/why-does-my-arraylist
-     * -contain-n-copies-of-the-last-item-added-to-the-list
      */
     public static Planet[] readPlanets(String filePath) {
         try {
@@ -45,10 +43,12 @@ public class NBody {
                                           Double.parseDouble(planetInfo[3]),
                                           Double.parseDouble(planetInfo[4]),
                                           planetInfo[5]);
-                    if (!planetNamesOrderings.contains(p.imgFileName)) {
-                        planetNamesOrderings.add(p.imgFileName);
+                    planetNamesOrderings.add(p.imgFileName);
+                    if (planetHashMap.containsKey(p.imgFileName)) {
+                        planetHashMap.replace(p.imgFileName, p);
+                    } else {
+                        planetHashMap.put(p.imgFileName, p);
                     }
-                    planetHashMap.put(p.imgFileName, p);
                 }
                 try {
                     fileLine =
