@@ -71,8 +71,8 @@ public class NBody {
             Planet[] planetArray =
                     new Planet[planetHashMap.values().toArray().length];
             int i = 0;
-            for (Planet p: planetHashMap.values()) {
-                for (String planetName : planetNamesOrderings) {
+            for (String planetName : planetNamesOrderings) { // Planet p: planetHashMap.values()
+                for (Planet p: planetHashMap.values()) { // String planetName : planetNamesOrderings
                     if (planetName.equals(p.imgFileName)) {
                         planetArray[i++] = p;
                     }
