@@ -27,7 +27,6 @@ public class NBody {
     public static Planet[] readPlanets(String filePath) {
         try {
             int lineNumber = 2;
-            int planetCount = 0;
             String fileLine = Files.readAllLines(Paths.get(filePath)).get(lineNumber);
             HashMap<String, Planet> planetHashMap = new HashMap<>();
 
