@@ -1,9 +1,7 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -23,11 +21,9 @@ public class NBody {
     /** Given a String FILEPATH, returns an array of planets inside the file.
      * public Planet(double xP, double yP, double xV, double yV, double m,
      *                   String img)
-     * https://stackoverflow.com/questions/19843506/why-does-my-arraylist-contain-n-copies-of-the-last-item-added-to-the-list
-     *
-     *
-     *
-     *                   */
+     * https://stackoverflow.com/questions/19843506/why-does-my-arraylist
+     * -contain-n-copies-of-the-last-item-added-to-the-list
+     */
     public static Planet[] readPlanets(String filePath) {
         try {
             int lineNumber = 2;
@@ -51,16 +47,6 @@ public class NBody {
                 }
                 planetHashMap.put(p.imgFileName, p);
                 lineNumber += 1;
-                /**
-                 if (Files.readAllLines(Paths.get(filePath))
-                 .get(lineNumber) != null && lineNumber
-                 < Files.readAllLines(Paths.get(filePath)).size()) {
-                 fileLine =
-                 Files.readAllLines(Paths.get(filePath)).get(lineNumber);
-                 } else {
-                 break;
-                 }
-                 */
                 try {
                     fileLine =
                             Files.readAllLines(Paths.get(filePath)).get(lineNumber);
@@ -71,8 +57,8 @@ public class NBody {
             Planet[] planetArray =
                     new Planet[planetHashMap.values().toArray().length];
             int i = 0;
-            for (String planetName : planetNamesOrderings) { // Planet p: planetHashMap.values()
-                for (Planet p: planetHashMap.values()) { // String planetName : planetNamesOrderings
+            for (String planetName : planetNamesOrderings) {
+                for (Planet p: planetHashMap.values()) {
                     if (planetName.equals(p.imgFileName)) {
                         planetArray[i++] = p;
                     }
@@ -116,7 +102,7 @@ public class NBody {
         StdDraw.picture(radius, -radius, "images/starfield.jpg");
 
         for (Planet p: planets) {
-            StdDraw.picture(p.xxPos, p.yyPos, "images/" + p.imgFileName);
+            p.draw();
         }
         StdDraw.show();
         StdDraw.enableDoubleBuffering();

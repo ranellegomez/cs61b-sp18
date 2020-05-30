@@ -59,6 +59,11 @@ public class Planet {
         imgFileName = p.imgFileName;
     }
 
+    /** Draws the image from this planet. */
+    public void draw() {
+        StdDraw.picture(xxPos, yyPos, "images/" + imgFileName);
+    }
+
 
     /**
      * Calculates the distance between two planets, given a Planet P
