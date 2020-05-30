@@ -42,9 +42,13 @@ public class NBody {
                                       Double.parseDouble(planetInfo[4]),
                                       planetInfo[5]);
                 planetHashMap.put(planetInfo[5], p);
-                fileLine =
-                        Files.readAllLines(Paths.get(filePath)).get(lineNumber); //
-                // lineNumber++
+
+                if (Files.readAllLines(Paths.get(filePath)).size() > lineNumber
+                        && Files.readAllLines(Paths.get(filePath))
+                        .get(lineNumber) != null) {
+                    fileLine =
+                            Files.readAllLines(Paths.get(filePath)).get(lineNumber);
+                }
                 lineNumber += 1;
             }
             Planet[] planetArray =
@@ -109,8 +113,10 @@ public class NBody {
                 xForces[i] = planets[i].calcNetForceExertedByX(planets);
                 yForces[i] = planets[i].calcNetForceExertedByY(planets);
                 if (xForces[i] < 0) {
+                    /*
                     System.out.println("xforces less than 0: " + xForces[i]);
                     System.out.println("yforces less than 0:" + yForces[i]);
+                     */
                 }
             }
             for (int j = 0; j < planets.length; j++) {

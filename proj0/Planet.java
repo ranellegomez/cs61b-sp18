@@ -92,7 +92,7 @@ public class Planet {
      */
     public double calcForceExertedByY(Planet p) {
         double angle = Math.atan((p.yyPos - yyPos) / (p.xxPos - xxPos));
-        System.out.println(Math.sin(angle));
+        //System.out.println(Math.sin(angle));
         //return calcForceExertedBy(p) * Math.sin(angle) / calcDistance(p);
         return calcForceExertedBy(p) * (p.yyPos - yyPos) / calcDistance(p);
     }
