@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -26,6 +27,7 @@ public class NBody {
      */
     public static Planet[] readPlanets(String filePath) {
         try {
+            int i = 0;
             int lineNumber = 2;
             String fileLine = Files.readAllLines(Paths.get(filePath)).get(lineNumber);
             HashMap<String, Planet> planetHashMap = new HashMap<>();
@@ -36,27 +38,27 @@ public class NBody {
 
                 fileLine = fileLine.trim();
                 String[] planetInfo = fileLine.split("\\s+");
-                Planet p = new Planet(Double.parseDouble(planetInfo[0]),
-                                      Double.parseDouble(planetInfo[1]),
-                                      Double.parseDouble(planetInfo[2]),
-                                      Double.parseDouble(planetInfo[3]),
-                                      Double.parseDouble(planetInfo[4]),
-                                      planetInfo[5]);
-                if (!planetNamesOrderings.contains(p.imgFileName)) {
-                    planetNamesOrderings.add(p.imgFileName);
+                if (planetInfo.length == 6) {
+                    Planet p = new Planet(Double.parseDouble(planetInfo[0]),
+                                          Double.parseDouble(planetInfo[1]),
+                                          Double.parseDouble(planetInfo[2]),
+                                          Double.parseDouble(planetInfo[3]),
+                                          Double.parseDouble(planetInfo[4]),
+                                          planetInfo[5]);
+                    if (!planetNamesOrderings.contains(p.imgFileName)) {
+                        planetNamesOrderings.add(p.imgFileName);
+                    }
+                    planetHashMap.put(p.imgFileName, p);
                 }
-                planetHashMap.put(p.imgFileName, p);
-                lineNumber += 1;
                 try {
                     fileLine =
-                            Files.readAllLines(Paths.get(filePath)).get(lineNumber);
+                            Files.readAllLines(Paths.get(filePath)).get(lineNumber++);
                 } catch(IndexOutOfBoundsException e) {
                     break;
                 }
             }
             Planet[] planetArray =
                     new Planet[planetHashMap.values().toArray().length];
-            int i = 0;
             for (String planetName : planetNamesOrderings) {
                 for (Planet p: planetHashMap.values()) {
                     if (planetName.equals(p.imgFileName)) {
