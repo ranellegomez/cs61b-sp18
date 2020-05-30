@@ -32,7 +32,7 @@ public class Planet {
     /**
      * The constant G used to calculate gravitational force.
      */
-    public static double G = 6.67e-11;
+    private static double G = 6.67e-11;
 
     /**
      * My constructor.

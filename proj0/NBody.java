@@ -63,7 +63,7 @@ public class NBody {
         }
     }
 
-    public static boolean isNumeric(String strNum) {
+    private static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;
         }
@@ -96,11 +96,6 @@ public class NBody {
 
         for (Planet p: planets) {
             StdDraw.picture(p.xxPos, p.yyPos, "images/" + p.imgFileName);
-            /*
-            System.out.println(p.imgFileName);
-            System.out.println(p.xxPos + " " + p.yyPos + " " + p.xxVel + " " + p.yyVel);
-
-             */
         }
         StdDraw.show();
         StdDraw.enableDoubleBuffering();
@@ -112,12 +107,6 @@ public class NBody {
             for (int i = 0; i < planets.length; i++) {
                 xForces[i] = planets[i].calcNetForceExertedByX(planets);
                 yForces[i] = planets[i].calcNetForceExertedByY(planets);
-                if (xForces[i] < 0) {
-                    /*
-                    System.out.println("xforces less than 0: " + xForces[i]);
-                    System.out.println("yforces less than 0:" + yForces[i]);
-                     */
-                }
             }
             for (int j = 0; j < planets.length; j++) {
                 planets[j].update(dt, xForces[j], yForces[j]);
