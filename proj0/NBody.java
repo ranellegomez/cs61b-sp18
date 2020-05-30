@@ -128,7 +128,7 @@ public class NBody {
                 StdDraw.picture(p.xxPos, p.yyPos, "images/" + p.imgFileName);
             }
             StdDraw.show();
-            StdDraw.pause(1);
+            StdDraw.pause(10);
         }
         StdOut.printf("%d\n", planets.length);
         StdOut.printf("%.2e\n", radius);
