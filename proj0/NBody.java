@@ -43,7 +43,9 @@ public class NBody {
                                       planetInfo[5]);
                 planetHashMap.put(planetInfo[5], p);
                 fileLine =
-                        Files.readAllLines(Paths.get(filePath)).get(lineNumber++);
+                        Files.readAllLines(Paths.get(filePath)).get(lineNumber); //
+                // lineNumber++
+                lineNumber += 1;
             }
             Planet[] planetArray =
                     new Planet[planetHashMap.values().toArray().length];
@@ -81,6 +83,7 @@ public class NBody {
 
         StdDraw.setScale(-radius, radius);
         StdDraw.clear();
+
 
         StdDraw.picture(-radius, radius, "images/starfield.jpg");
         StdDraw.picture(radius, radius, "images/starfield.jpg");
