@@ -97,7 +97,6 @@ public class NBody {
         StdDraw.setScale(-radius, radius);
         StdDraw.clear();
 
-
         StdDraw.picture(-radius, radius, "images/starfield.jpg");
         StdDraw.picture(radius, radius, "images/starfield.jpg");
         StdDraw.picture(-radius, -radius, "images/starfield.jpg");
@@ -106,6 +105,7 @@ public class NBody {
         for (Planet p: planets) {
             p.draw();
         }
+
         StdDraw.show();
         StdDraw.enableDoubleBuffering();
 
@@ -117,9 +117,11 @@ public class NBody {
                 xForces[i] = planets[i].calcNetForceExertedByX(planets);
                 yForces[i] = planets[i].calcNetForceExertedByY(planets);
             }
+
             for (int j = 0; j < planets.length; j++) {
                 planets[j].update(dt, xForces[j], yForces[j]);
             }
+
             StdDraw.setScale(-radius, radius);
             StdDraw.clear();
 
@@ -131,6 +133,7 @@ public class NBody {
             for (Planet p: planets) {
                 StdDraw.picture(p.xxPos, p.yyPos, "images/" + p.imgFileName);
             }
+
             StdDraw.show();
             StdDraw.pause(10);
         }
