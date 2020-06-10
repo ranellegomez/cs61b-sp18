@@ -49,6 +49,7 @@ public class LinkedListDeque<T> {
          } else {
              _first._prev = new IntNode(o, _first, _first);
              _first._next = _first._prev;
+             _size += 1;
          }
     }
 
@@ -78,7 +79,10 @@ public class LinkedListDeque<T> {
      */
     public T removeFirst() {
         IntNode removed = _first;
-        if (removed != null) {
+        if (removed == null) {
+            return  null;
+        }
+        if (_first._next != null && _first._prev != null) {
             _first = _first._next;
             _first._prev = removed._prev;
             removed._prev._next = _first;
