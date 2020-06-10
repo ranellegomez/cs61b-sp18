@@ -10,6 +10,10 @@ public class LinkedListDeque<T> {
         _first = new IntNode(x, null, null);
     }
 
+    public LinkedListDeque() {
+        _first = new IntNode(null, null, null);
+    }
+
     public class IntNode {
         /** Remaining elements of list. */
         public T _item;
@@ -103,5 +107,15 @@ public class LinkedListDeque<T> {
             }
             return ptr._item;
         }
+    }
+    public T getRecursive(int index) {
+        if (index < 0 || index > _size) {
+            return null;
+        }
+        if (index == 0) {
+            return _first._item;
+        }
+        _first = _first._next;
+        return getRecursive(index - 1);
     }
 }
