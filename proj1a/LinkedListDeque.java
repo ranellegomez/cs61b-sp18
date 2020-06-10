@@ -42,9 +42,14 @@ public class LinkedListDeque<T> {
 
     /** Adds an item of type T to the back of the deque. */
      public void addLast(T o) {
-         _first._prev._next = new IntNode(o, _first._prev, _first);
-         _first._prev = _first._prev._next;
-         _size += 1;
+         if (_first._prev != null) {
+             _first._prev._next = new IntNode(o, _first._prev, _first);
+             _first._prev = _first._prev._next;
+             _size += 1;
+         } else {
+             _first._prev = new IntNode(o, _first, _first);
+             _first._next = _first._prev;
+         }
     }
 
     /** Returns true if deque is empty, false otherwise. */
