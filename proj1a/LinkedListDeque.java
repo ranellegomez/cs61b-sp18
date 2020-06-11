@@ -87,6 +87,7 @@ public class LinkedListDeque<T> {
             _first._prev = removed._prev;
             removed._prev._next = _first;
         }
+        _size -= 1;
         return removed._item;
     }
 
@@ -99,6 +100,7 @@ public class LinkedListDeque<T> {
             _first._prev = removed._prev;
             _first._prev._next = _first;
         }
+        _size -= 1;
         return removed._item;
     }
 
