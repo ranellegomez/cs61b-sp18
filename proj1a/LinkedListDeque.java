@@ -66,12 +66,12 @@ public class LinkedListDeque<T> {
     /** Prints the items in the deque from first to last, separated by a
      * space. */
     public void printDeque() {
-        IntNode ptr = _first._next;
-        while (ptr != _first || ptr != null) {
+        IntNode ptr = _first;
+        for (int i = 0; i < size(); i += 1) {
             System.out.println(ptr._item);
             ptr = ptr._next;
         }
-        System.out.println(_first._item);
+
     }
 
     /** Removes and returns the item at the front of the deque. If no such
