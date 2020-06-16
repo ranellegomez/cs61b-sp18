@@ -2,13 +2,15 @@
 
 public class LinkedListDeque<T> {
     /** First element of list. */
-    public IntNode _first;
+    private IntNode _first;
     /** The size of this LinkedListDeque. */
     private int _size;
 
-    public LinkedListDeque(T x) {
+    /*public LinkedListDeque(T x) {
         _first = new IntNode(x, null, null);
     }
+    */
+     
 
     public LinkedListDeque() {
         _first = new IntNode(null, null, null);
@@ -21,7 +23,7 @@ public class LinkedListDeque<T> {
         public IntNode _next;
 
         /** A List with head HEAD0 and tail TAIL0. */
-        public IntNode(T item, IntNode prev, IntNode next) {
+        private IntNode(T item, IntNode prev, IntNode next) {
             _item = item;
             _prev = prev;
             _next = next;
