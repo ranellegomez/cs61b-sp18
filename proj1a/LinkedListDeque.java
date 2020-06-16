@@ -96,7 +96,9 @@ public class LinkedListDeque<T> {
      */
     public T removeLast() {
         IntNode removed = _first._prev;
-        if (removed != null) {
+        if (removed == null) {
+            return null;
+        } else {
             _first._prev = removed._prev;
             _first._prev._next = _first;
         }
