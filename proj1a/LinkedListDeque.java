@@ -55,7 +55,7 @@ public class LinkedListDeque<T> {
 
     /** Returns true if deque is empty, false otherwise. */
      public boolean isEmpty() {
-        return _size == 0;
+        return _first == null;
     }
 
     /** Returns the number of items in the deque. */
