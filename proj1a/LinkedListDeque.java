@@ -1,4 +1,5 @@
 /** A simple, native trainer. */
+import java.util.ArrayDeque;
 
 public class LinkedListDeque<T> {
     /** First element of list. */
@@ -10,10 +11,13 @@ public class LinkedListDeque<T> {
         _first = new IntNode(x, null, null);
     }
     */
-     
+
 
     public LinkedListDeque() {
         _first = new IntNode(null, null, null);
+        _first._prev = _first;
+        _first._next = _first;
+        _size = 0;
     }
 
     public class IntNode {
