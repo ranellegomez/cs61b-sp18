@@ -43,6 +43,7 @@ public class LinkedListDeque<T> {
         /** Adds an item of type T to the front of the deque. */
     public void addFirst(T o) {
         _first._next = new IntNode(o, _first, _first._next);
+        _first._next._next._prev = _first._next;
         _size += 1;
     }
 
@@ -66,7 +67,7 @@ public class LinkedListDeque<T> {
     /** Prints the items in the deque from first to last, separated by a
      * space. */
     public void printDeque() {
-        IntNode ptr = _first;
+        IntNode ptr = _first._next;
         for (int i = 0; i < size(); i += 1) {
             System.out.println(ptr._item);
             ptr = ptr._next;
