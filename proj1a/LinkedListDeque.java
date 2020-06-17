@@ -1,17 +1,11 @@
-/** A simple, native trainer. */
-import java.util.ArrayDeque;
+/** (C) 2020 Ranelle Gomez */
 
 public class LinkedListDeque<T> {
     /** First element of list. */
     private IntNode _first;
+
     /** The size of this LinkedListDeque. */
     private int _size;
-
-    /*public LinkedListDeque(T x) {
-        _first = new IntNode(x, null, null);
-    }
-    */
-
 
     public LinkedListDeque() {
         _first = new IntNode(null, null, null);
@@ -127,6 +121,7 @@ public class LinkedListDeque<T> {
         }
     }
 
+    /** Returns the item at the given index of me. */
     public T getRecursive(int index) {
         if (index < 0 || index > _size) {
             return null;
@@ -138,6 +133,8 @@ public class LinkedListDeque<T> {
         return getNodeRecursive(ptr, index);
     }
 
+    /** A helper method for getRecursive. Given a LinkedListDeque, returns the
+     * item at the given index. */
     private T getNodeRecursive(IntNode n, int index) {
         if (index == 0) {
             return n._item;
