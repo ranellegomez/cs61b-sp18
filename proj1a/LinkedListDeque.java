@@ -42,7 +42,7 @@ public class LinkedListDeque<T> {
 
         /** Adds an item of type T to the front of the deque. */
     public void addFirst(T o) {
-        _first = new IntNode(o, _first._prev, _first);
+        _first._next = new IntNode(o, _first, _first._next);
         _size += 1;
     }
 
@@ -84,14 +84,13 @@ public class LinkedListDeque<T> {
      * item exists, returns null.
      */
     public T removeFirst() {
-        IntNode removed = _first;
-        if (removed == null) {
+        IntNode removed = _first._next;
+        if (_size == 0) { //removed == null
             return  null;
-        }
-        if (_first._next != null && _first._prev != null) {
-            _first = _first._next;
-            _first._prev = removed._prev;
-            removed._prev._next = _first;
+        } else {
+            _first._next = _first._next._next;
+            _first._next._prev = _first;
+            //removed._prev._next = _first;
         }
         _size -= 1;
         return removed._item;
@@ -102,11 +101,16 @@ public class LinkedListDeque<T> {
      */
     public T removeLast() {
         IntNode removed = _first._prev;
-        if (removed == null) {
+        if (_size == 0) { //removed == null
             return null;
         } else {
+            /*
             _first._prev = removed._prev;
             _first._prev._next = _first;
+
+             */
+            _first._prev._prev._next = _first;
+            _first._prev = _first._prev._prev;
         }
         _size -= 1;
         return removed._item;
@@ -120,19 +124,20 @@ public class LinkedListDeque<T> {
         if (index >= _size) {
             return null;
         } else {
-            IntNode ptr = _first;
+            IntNode ptr = _first._next;
             for (int i = 0; i < index; i += 1) {
                 ptr = ptr._next;
             }
             return ptr._item;
         }
     }
+
     public T getRecursive(int index) {
         if (index < 0 || index > _size) {
             return null;
         }
         if (index == 0) {
-            return _first._item;
+            return _first._next._item;
         }
         _first = _first._next;
         return getRecursive(index - 1);
