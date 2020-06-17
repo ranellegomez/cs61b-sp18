@@ -135,7 +135,7 @@ public class LinkedListDeque<T> {
             return _first._next._item;
         }
         IntNode ptr = _first._next;
-        return getNodeRecursive(ptr, index - 1);
+        return getNodeRecursive(ptr, index);
     }
 
     public T getNodeRecursive(IntNode n, int index) {
