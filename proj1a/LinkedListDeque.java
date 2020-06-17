@@ -48,15 +48,9 @@ public class LinkedListDeque<T> {
 
     /** Adds an item of type T to the back of the deque. */
      public void addLast(T o) {
-         if (_first._prev != null) {
-             _first._prev._next = new IntNode(o, _first._prev, _first);
-             _first._prev = _first._prev._next;
-             _size += 1;
-         } else {
-             _first._prev = new IntNode(o, _first, _first);
-             _first._next = _first._prev;
-             _size += 1;
-         }
+         _first._prev._next = new IntNode(o, _first._prev, _first);
+         _first._prev = _first._prev._next;
+         _size += 1;
     }
 
     /** Returns true if deque is empty, false otherwise. */
@@ -139,7 +133,15 @@ public class LinkedListDeque<T> {
         if (index == 0) {
             return _first._next._item;
         }
-        _first = _first._next;
-        return getRecursive(index - 1);
+        IntNode ptr = _first._next;
+        return getNodeRecursive(ptr, index - 1);
+    }
+
+    public T getNodeRecursive(IntNode n, int index) {
+        if (index == 0) {
+            return n._item;
+        } else {
+            return getNodeRecursive(n._next, index - 1);
+        }
     }
 }
