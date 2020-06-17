@@ -20,7 +20,7 @@ public class LinkedListDeque<T> {
         _size = 0;
     }
 
-    public class IntNode {
+    private class IntNode {
         /** Remaining elements of list. */
         public T _item;
         public IntNode _prev;
@@ -138,7 +138,7 @@ public class LinkedListDeque<T> {
         return getNodeRecursive(ptr, index);
     }
 
-    public T getNodeRecursive(IntNode n, int index) {
+    private T getNodeRecursive(IntNode n, int index) {
         if (index == 0) {
             return n._item;
         } else {
