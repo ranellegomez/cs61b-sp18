@@ -44,7 +44,7 @@ public class ArrayDeque<T> {
     /** Adds an item of type T to the back of the deque. */
     public void addLast(T o) {
         _items[modulo(_nextLast)] = o;
-        _nextLast = modulo(_nextLast + 1)
+        _nextLast = modulo(_nextLast + 1);
         _size += 1;
     }
 
