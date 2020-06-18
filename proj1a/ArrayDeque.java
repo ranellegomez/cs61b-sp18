@@ -21,9 +21,9 @@ public class ArrayDeque<T> {
 
     /** Adds an item of type T to the front of the deque. */
     public void addFirst(T o) {
-        _items[_nextFirst++] = o;
+        _items[_nextFirst++ % _size] = o;
         _size += 1;
-        get_nextLast();
+        //get_nextLast();
     }
 
     /** Gets the last index and updates it. */
@@ -59,6 +59,16 @@ public class ArrayDeque<T> {
     /** Prints the items in the deque from first to last, separated by a
      * space. */
     public void printDeque() {
+        for (int i = _nextFirst; i < _size; i += 1) {
+            if (_items[i] != null) {
+                System.out.println(_items[i]);
+            }
+        }
+        for (int j = 0; j < _nextFirst; j += 1) {
+            if (_items[j] != null) {
+                System.out.println(_items[j]);
+            }
+        }
 
     }
 
@@ -66,14 +76,26 @@ public class ArrayDeque<T> {
      * item exists, returns null.
      */
     public T removeFirst() {
-        return null;
+        if (isEmpty()) {
+            return null;
+        }
+        T removedFirst = _items[_nextFirst];
+        _items[_nextFirst++ % _size] = null;
+        _size -= 1;
+        return removedFirst;
     }
 
     /** Removes and returns the item at the back of the deque. If no such
      * item exists, returns null.
      */
     public T removeLast() {
-        return null;
+        if (isEmpty()) {
+            return null;
+        }
+        T removedLast = _items[_nextFirst];
+        _items[_nextLast++ % _size] = null;
+        _size -= 1;
+        return removedLast;
     }
 
     /** Gets the item at the given index, where 0 is the front, 1 is the next
@@ -81,11 +103,6 @@ public class ArrayDeque<T> {
      * the deque!
      */
     public T get(int index) {
-        return null;
-    }
-
-    /** Returns the item at the given index of me. */
-    public T getRecursive(int index) {
-        return null;
+        return _items[index];
     }
 }
