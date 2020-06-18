@@ -13,7 +13,7 @@ public class ArrayDeque<T> {
 
     /** The index of where the last item is to be inserted when nextLast is
      called. */
-    int _nextLast = 0;
+    int _nextLast = modulo(_nextFirst + 1);
 
     public ArrayDeque() {
         _items = (T[]) new Object[8];
@@ -21,7 +21,8 @@ public class ArrayDeque<T> {
 
     /** Adds an item of type T to the front of the deque. */
     public void addFirst(T o) {
-        _items[_nextFirst++ % _size] = o;
+        _items[modulo(_nextFirst)] = o;
+        _nextFirst = modulo(_nextFirst - 1);
         _size += 1;
         //get_nextLast();
     }
@@ -42,7 +43,8 @@ public class ArrayDeque<T> {
 
     /** Adds an item of type T to the back of the deque. */
     public void addLast(T o) {
-        _items[_nextLast++ % _size] = o;
+        _items[modulo(_nextLast)] = o;
+        _nextLast = modulo(_nextLast + 1)
         _size += 1;
     }
 
@@ -80,7 +82,8 @@ public class ArrayDeque<T> {
             return null;
         }
         T removedFirst = _items[_nextFirst];
-        _items[_nextFirst++ % _size] = null;
+        _items[_nextFirst] = null;
+        _nextFirst = modulo(_nextFirst + 1);
         _size -= 1;
         return removedFirst;
     }
@@ -92,8 +95,9 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        T removedLast = _items[_nextFirst];
-        _items[_nextLast++ % _size] = null;
+        T removedLast = _items[_nextLast];
+        _items[_nextLast] = null;
+        _nextLast = modulo(_nextLast - 1);
         _size -= 1;
         return removedLast;
     }
@@ -104,5 +108,14 @@ public class ArrayDeque<T> {
      */
     public T get(int index) {
         return _items[index];
+    }
+
+    /** Return the value of P modulo the size. */
+    final int modulo(int p) {
+        int r = p % _size;
+        if (r < 0) {
+            r += size();
+        }
+        return r;
     }
 }
