@@ -22,8 +22,8 @@ public class ArrayDeque<T> {
     /** Adds an item of type T to the front of the deque. */
     public void addFirst(T o) {
         _items[modulo(_nextFirst)] = o;
-        _nextFirst = modulo(_nextFirst - 1);
         _size += 1;
+        _nextFirst = modulo(_nextFirst - 1);
         //get_nextLast();
     }
 
@@ -44,8 +44,9 @@ public class ArrayDeque<T> {
     /** Adds an item of type T to the back of the deque. */
     public void addLast(T o) {
         _items[modulo(_nextLast)] = o;
-        _nextLast = modulo(_nextLast + 1);
         _size += 1;
+        _nextLast = modulo(_nextLast + 1);
+
     }
 
     /** Returns true if deque is empty, false otherwise. */
@@ -83,8 +84,8 @@ public class ArrayDeque<T> {
         }
         T removedFirst = _items[_nextFirst];
         _items[_nextFirst] = null;
-        _nextFirst = modulo(_nextFirst + 1);
         _size -= 1;
+        _nextFirst = modulo(_nextFirst + 1);
         return removedFirst;
     }
 
@@ -97,8 +98,8 @@ public class ArrayDeque<T> {
         }
         T removedLast = _items[_nextLast];
         _items[_nextLast] = null;
-        _nextLast = modulo(_nextLast - 1);
         _size -= 1;
+        _nextLast = modulo(_nextLast - 1);
         return removedLast;
     }
 
@@ -112,6 +113,9 @@ public class ArrayDeque<T> {
 
     /** Return the value of P modulo the size. */
     final int modulo(int p) {
+        if (_size == 0) {
+            return _nextFirst + 1;
+        }
         int r = p % _size;
         if (r < 0) {
             r += size();
