@@ -27,7 +27,7 @@ public class ArrayDeque<T> {
         //get_nextLast();
     }
 
-    /** Gets the last index and updates it. */
+    /** Gets the last index and updates it.
     private int get_nextLast() {
         if ((_items[(_nextFirst + 1) % _size] == null)) {
             _nextLast = _nextFirst + 1;
@@ -39,7 +39,7 @@ public class ArrayDeque<T> {
             }
         }
         return _nextLast;
-    }
+    } */
 
     /** Adds an item of type T to the back of the deque. */
     public void addLast(T o) {
@@ -82,8 +82,8 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        T removedFirst = _items[_nextFirst];
-        _items[_nextFirst] = null;
+        T removedFirst = _items[_nextFirst + 1];
+        _items[_nextFirst + 1] = null;
         _size -= 1;
         _nextFirst = modulo(_nextFirst + 1);
         return removedFirst;
@@ -96,8 +96,8 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        T removedLast = _items[_nextLast];
-        _items[_nextLast] = null;
+        T removedLast = _items[_nextLast - 1];
+        _items[_nextLast - 1] = null;
         _size -= 1;
         _nextLast = modulo(_nextLast - 1);
         return removedLast;
