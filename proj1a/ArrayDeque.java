@@ -108,7 +108,11 @@ public class ArrayDeque<T> {
      * the deque!
      */
     public T get(int index) {
-        return _items[index];
+        if (index >= _size) {
+            return null;
+        } else {
+            return _items[index];
+        }
     }
 
     /** Return the value of P modulo the size. */
