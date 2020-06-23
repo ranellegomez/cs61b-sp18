@@ -43,20 +43,6 @@ public class ArrayDeque<T> {
         } */
     }
 
-    /** Gets the last index and updates it.
-    private int get_nextLast() {
-        if ((_items[(_nextFirst + 1) % _size] == null)) {
-            _nextLast = _nextFirst + 1;
-        } else {
-            for (int i = _nextFirst; i < _size; _size += 1) {
-                if (_items[i] == null) {
-                    _nextLast = i;
-                }
-            }
-        }
-        return _nextLast;
-    } */
-
     /** Adds an item of type T to the back of the deque. */
     public void addLast(T o) {
         _items[modulo(_nextLast)] = o;
