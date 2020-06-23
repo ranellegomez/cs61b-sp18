@@ -10,12 +10,11 @@ public class ArrayDeque<T> {
 
     /** The index of where the first item is to be inserted when addFirst is
      called. */
-    int _nextFirst = 1;
+    int _nextFirst = 0;
 
     /** The index of where the last item is to be inserted when nextLast is
      called. */
     int _nextLast = modulo(_nextFirst + 1);
-    private java.lang.Object Object;
 
     public ArrayDeque() {
         _items = (T[]) new Object[8];
@@ -23,48 +22,31 @@ public class ArrayDeque<T> {
 
     /** Adds an item of type T to the front of the deque. */
     public void addFirst(T o) {
-
         _items[modulo(_nextFirst)] = o;
         _size += 1;
         _nextFirst = modulo(_nextFirst - 1);
-        /*
-        if (Arrays.asList(_items).contains(null)) {
-            _items[modulo(_nextFirst)] = o;
-            _size += 1;
-            _nextFirst = modulo(_nextFirst - 1);
-        } else {
-            resize();
-            T[] oldItems = _items.clone();
-            System.arraycopy(oldItems, 1, _items, 2, oldItems.length - 1);
-            _items[1] = o;
-            _nextFirst = 0;
-            _nextLast += 1;
-            _size += 1;
-        } */
+        //get_nextLast();
     }
+
+    /** Gets the last index and updates it.
+     private int get_nextLast() {
+     if ((_items[(_nextFirst + 1) % _size] == null)) {
+     _nextLast = _nextFirst + 1;
+     } else {
+     for (int i = _nextFirst; i < _size; _size += 1) {
+     if (_items[i] == null) {
+     _nextLast = i;
+     }
+     }
+     }
+     return _nextLast;
+     } */
 
     /** Adds an item of type T to the back of the deque. */
     public void addLast(T o) {
         _items[modulo(_nextLast)] = o;
         _size += 1;
         _nextLast = modulo(_nextLast + 1);
-        /*
-        if (Arrays.asList(_items).contains(null)) {
-            _items[modulo(_nextLast)] = o;
-            _size += 1;
-            _nextLast = modulo(_nextLast + 1);
-        } else {
-            resize();
-            T[] oldItems = _items.clone();
-            System.arraycopy(oldItems, 1, _items, 1, oldItems.length - 1);
-            _items[oldItems.length] = oldItems[0];
-            _items[oldItems.length + 1] = o;
-            _nextFirst = 0;
-            _nextLast = oldItems.length + 2;
-            _size += 1;
-        }
-
-         */
 
     }
 
