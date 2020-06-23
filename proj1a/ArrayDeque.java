@@ -1,4 +1,5 @@
 import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class ArrayDeque<T> {
     /** The array containing the items of this ArrayDeque. */
@@ -9,7 +10,7 @@ public class ArrayDeque<T> {
 
     /** The index of where the first item is to be inserted when addFirst is
      called. */
-    int _nextFirst = 0;
+    int _nextFirst = 1;
 
     /** The index of where the last item is to be inserted when nextLast is
      called. */
@@ -21,9 +22,19 @@ public class ArrayDeque<T> {
 
     /** Adds an item of type T to the front of the deque. */
     public void addFirst(T o) {
-        _items[modulo(_nextFirst)] = o;
-        _size += 1;
-        _nextFirst = modulo(_nextFirst - 1);
+        if (Arrays.asList(_items).contains(null)) {
+            _items[modulo(_nextFirst)] = o;
+            _size += 1;
+            _nextFirst = modulo(_nextFirst - 1);
+        } else {
+            resize();
+            T[] oldItems = _items.clone();
+            System.arraycopy(oldItems, 1, _items, 2, _size);
+            _items[1] = o;
+            _nextFirst -= 1;
+            _nextLast += 1;
+            _size += 1;
+        }
         //get_nextLast();
     }
 
@@ -43,9 +54,20 @@ public class ArrayDeque<T> {
 
     /** Adds an item of type T to the back of the deque. */
     public void addLast(T o) {
-        _items[modulo(_nextLast)] = o;
-        _size += 1;
-        _nextLast = modulo(_nextLast + 1);
+        if (Arrays.asList(_items).contains(null)) {
+            _items[modulo(_nextLast)] = o;
+            _size += 1;
+            _nextLast = modulo(_nextLast + 1);
+        } else {
+            resize();
+            T[] oldItems = _items.clone();
+            System.arraycopy(oldItems, 1, _items, 2, oldItems.length - 1);
+            _items[1] = oldItems[0];
+            _items[oldItems.length] = o;
+            _nextFirst = 0;
+            _nextLast = oldItems.length + 2;
+            _size += 1;
+        }
 
     }
 
@@ -113,6 +135,12 @@ public class ArrayDeque<T> {
         } else {
             return _items[index];
         }
+    }
+
+    /** Resizes the array when it is full.
+     */
+    public void resize() {
+        _items = (T[]) new Object[_size * 4];
     }
 
     /** Return the value of P modulo the size. */
