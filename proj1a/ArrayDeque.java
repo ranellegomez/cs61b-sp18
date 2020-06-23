@@ -28,6 +28,7 @@ public class ArrayDeque<T> {
             _nextFirst = modulo(_nextFirst - 1);
         } else {
             T[] oldItems = _items.clone();
+            resize();
             System.arraycopy(oldItems, 0, _items, 1, oldItems.length - 1);
             _items[0] = o;
             _size += 1;
@@ -60,6 +61,7 @@ public class ArrayDeque<T> {
             _nextLast = modulo(_nextLast + 1);
         } else {
             T[] oldItems = _items.clone();
+            resize();
             System.arraycopy(oldItems, 0, _items, 0, oldItems.length);
             _items[oldItems.length] = o;
             _size += 1;
