@@ -134,12 +134,6 @@ public class ArrayDeque<T> {
         }
     }
 
-    /** Resizes the array when it is full.
-     */
-    public void resize() {
-        _items = (T[]) new Object[(_size + 1) * 4];
-    }
-
     /** Return the value of P modulo the size. */
     final int modulo(int p) {
         if (_size == 0) {
