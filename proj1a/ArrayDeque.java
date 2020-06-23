@@ -15,6 +15,7 @@ public class ArrayDeque<T> {
     /** The index of where the last item is to be inserted when nextLast is
      called. */
     int _nextLast = modulo(_nextFirst + 1);
+    private java.lang.Object Object;
 
     public ArrayDeque() {
         _items = (T[]) new Object[8];
@@ -29,13 +30,12 @@ public class ArrayDeque<T> {
         } else {
             resize();
             T[] oldItems = _items.clone();
-            System.arraycopy(oldItems, 1, _items, 2, _size);
+            System.arraycopy(oldItems, 1, _items, 2, oldItems.length - 1);
             _items[1] = o;
-            _nextFirst -= 1;
+            _nextFirst = 0;
             _nextLast += 1;
             _size += 1;
         }
-        //get_nextLast();
     }
 
     /** Gets the last index and updates it.
@@ -61,9 +61,9 @@ public class ArrayDeque<T> {
         } else {
             resize();
             T[] oldItems = _items.clone();
-            System.arraycopy(oldItems, 1, _items, 2, oldItems.length - 1);
-            _items[1] = oldItems[0];
-            _items[oldItems.length] = o;
+            System.arraycopy(oldItems, 1, _items, 1, oldItems.length - 1);
+            _items[oldItems.length] = oldItems[0];
+            _items[oldItems.length + 1] = o;
             _nextFirst = 0;
             _nextLast = oldItems.length + 2;
             _size += 1;
@@ -140,7 +140,7 @@ public class ArrayDeque<T> {
     /** Resizes the array when it is full.
      */
     public void resize() {
-        _items = (T[]) new Object[_size * 4];
+        _items = (T[]) new Object[(_size + 1) * 4];
     }
 
     /** Return the value of P modulo the size. */
