@@ -22,10 +22,19 @@ public class ArrayDeque<T> {
 
     /** Adds an item of type T to the front of the deque. */
     public void addFirst(T o) {
-        _items[modulo(_nextFirst)] = o;
-        _size += 1;
-        _nextFirst = modulo(_nextFirst - 1);
-        //get_nextLast();
+        if (_size == 0 || Arrays.asList(_items).contains(null)) {
+            _items[modulo(_nextFirst)] = o;
+            _size += 1;
+            _nextFirst = modulo(_nextFirst - 1);
+        } else {
+            T[] oldItems = _items.clone();
+            System.arraycopy(oldItems, 0, _items, 1, oldItems.length - 1);
+            _items[0] = o;
+            _size += 1;
+            _nextFirst = _size - 1;
+            _nextLast += 1;
+        }
+
     }
 
     /** Gets the last index and updates it.
@@ -44,9 +53,18 @@ public class ArrayDeque<T> {
 
     /** Adds an item of type T to the back of the deque. */
     public void addLast(T o) {
-        _items[modulo(_nextLast)] = o;
-        _size += 1;
-        _nextLast = modulo(_nextLast + 1);
+
+        if (_size == 0 || Arrays.asList(_items).contains(null)) {
+            _items[modulo(_nextLast)] = o;
+            _size += 1;
+            _nextLast = modulo(_nextLast + 1);
+        } else {
+            T[] oldItems = _items.clone();
+            System.arraycopy(oldItems, 0, _items, 0, oldItems.length);
+            _items[oldItems.length] = o;
+            _size += 1;
+            _nextLast += 1;
+        }
 
     }
 
@@ -114,6 +132,12 @@ public class ArrayDeque<T> {
         } else {
             return _items[index];
         }
+    }
+
+    /** Resizes the array when it is full.
+     */
+    public void resize() {
+        _items = (T[]) new Object[(_size + 1) * 4];
     }
 
     /** Return the value of P modulo the size. */
