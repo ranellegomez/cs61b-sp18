@@ -139,7 +139,7 @@ public class ArrayDeque<T> {
     /** Resizes the array when it is full.
      */
     public void resize() {
-        _items = (T[]) new Object[(_size * 2)];
+        _items = (T[]) new Object[(_size * 8)];
     }
 
     /** Return the value of P modulo the size. */
