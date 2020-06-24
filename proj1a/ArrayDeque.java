@@ -139,6 +139,8 @@ public class ArrayDeque<T> {
     /** Resizes the array when it is full.
      */
     public void resize() {
+        // Note. _size * 8 -> fails last test.
+        // _size * 2 -> fails first test.
         _items = (T[]) new Object[(_size * 8)];
     }
 
