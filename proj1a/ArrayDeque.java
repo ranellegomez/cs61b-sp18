@@ -28,7 +28,6 @@ public class ArrayDeque<T> {
             _nextFirst = modulo(_nextFirst - 1);
         } else {
             T[] oldItems = _items.clone();
-            resize(2 * _size);
             System.arraycopy(oldItems, 0, _items, 1, oldItems.length - 1);
             _items[0] = o;
             _size += 1;
@@ -37,20 +36,6 @@ public class ArrayDeque<T> {
         }
 
     }
-
-    /** Gets the last index and updates it.
-     private int get_nextLast() {
-     if ((_items[(_nextFirst + 1) % _size] == null)) {
-     _nextLast = _nextFirst + 1;
-     } else {
-     for (int i = _nextFirst; i < _size; _size += 1) {
-     if (_items[i] == null) {
-     _nextLast = i;
-     }
-     }
-     }
-     return _nextLast;
-     } */
 
     /** Adds an item of type T to the back of the deque. */
     public void addLast(T o) {
@@ -61,7 +46,6 @@ public class ArrayDeque<T> {
             _nextLast = modulo(_nextLast + 1);
         } else {
             T[] oldItems = _items.clone();
-            resize(2 * _size);
             System.arraycopy(oldItems, 0, _items, 0, oldItems.length);
             _items[oldItems.length] = o;
             _size += 1;
@@ -99,7 +83,7 @@ public class ArrayDeque<T> {
     /** Removes and returns the item at the front of the deque. If no such
      * item exists, returns null.
      */
-    public T removeFirst() { // Like removing from the top of the queue.
+    public T removeFirst() {
         if (isEmpty()) {
             return null;
         }
@@ -138,8 +122,8 @@ public class ArrayDeque<T> {
 
     /** Resizes the array when it is full.
      */
-    public void resize(int max) {
-        _items = (T[]) new Object[max];
+    public void resize(int newSize) {
+        _items = (T[]) new Object[(newSize)];
     }
 
     /** Return the value of P modulo the size. */
