@@ -1,6 +1,8 @@
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
+/** (C) 2020 Ranelle Gomez */
+
 public class ArrayDeque<T> {
     /** The array containing the items of this ArrayDeque. */
     T [] _items;
