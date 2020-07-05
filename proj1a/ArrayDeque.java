@@ -1,4 +1,5 @@
 import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class ArrayDeque<T> {
     /** The array containing the items of this ArrayDeque. */
@@ -21,31 +22,49 @@ public class ArrayDeque<T> {
 
     /** Adds an item of type T to the front of the deque. */
     public void addFirst(T o) {
-        _items[modulo(_nextFirst)] = o;
-        _size += 1;
-        _nextFirst = modulo(_nextFirst - 1);
-        //get_nextLast();
+        if (_size == 0 || Arrays.asList(_items).contains(null)) {
+            _items[modulo(_nextFirst)] = o;
+            _size += 1;
+            _nextFirst = modulo(_nextFirst - 1);
+        } else {
+            T[] oldItems = _items.clone();
+            System.arraycopy(oldItems, 0, _items, 1, oldItems.length - 1);
+            _items[0] = o;
+            _size += 1;
+            _nextFirst = _size - 1;
+            _nextLast += 1;
+        }
+
     }
 
-    /** Gets the last index and updates it. */
-    private int get_nextLast() {
-        if ((_items[(_nextFirst + 1) % _size] == null)) {
-            _nextLast = _nextFirst + 1;
-        } else {
-            for (int i = _nextFirst; i < _size; _size += 1) {
-                if (_items[i] == null) {
-                    _nextLast = i;
-                }
-            }
-        }
-        return _nextLast;
-    }
+    /** Gets the last index and updates it.
+     private int get_nextLast() {
+     if ((_items[(_nextFirst + 1) % _size] == null)) {
+     _nextLast = _nextFirst + 1;
+     } else {
+     for (int i = _nextFirst; i < _size; _size += 1) {
+     if (_items[i] == null) {
+     _nextLast = i;
+     }
+     }
+     }
+     return _nextLast;
+     } */
 
     /** Adds an item of type T to the back of the deque. */
     public void addLast(T o) {
-        _items[modulo(_nextLast)] = o;
-        _size += 1;
-        _nextLast = modulo(_nextLast + 1);
+
+        if (_size == 0 || Arrays.asList(_items).contains(null)) {
+            _items[modulo(_nextLast)] = o;
+            _size += 1;
+            _nextLast = modulo(_nextLast + 1);
+        } else {
+            T[] oldItems = _items.clone();
+            System.arraycopy(oldItems, 0, _items, 0, oldItems.length);
+            _items[oldItems.length] = o;
+            _size += 1;
+            _nextLast += 1;
+        }
 
     }
 
@@ -82,8 +101,8 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        T removedFirst = _items[_nextFirst];
-        _items[_nextFirst] = null;
+        T removedFirst = _items[_nextFirst + 1];
+        _items[_nextFirst + 1] = null;
         _size -= 1;
         _nextFirst = modulo(_nextFirst + 1);
         return removedFirst;
@@ -96,8 +115,8 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        T removedLast = _items[_nextLast];
-        _items[_nextLast] = null;
+        T removedLast = _items[_nextLast - 1];
+        _items[_nextLast - 1] = null;
         _size -= 1;
         _nextLast = modulo(_nextLast - 1);
         return removedLast;
@@ -108,7 +127,17 @@ public class ArrayDeque<T> {
      * the deque!
      */
     public T get(int index) {
-        return _items[index];
+        if (index >= _size) {
+            return null;
+        } else {
+            return _items[index];
+        }
+    }
+
+    /** Resizes the array when it is full.
+     */
+    public void resize() {
+        _items = (T[]) new Object[(_size + 1) * 4];
     }
 
     /** Return the value of P modulo the size. */
@@ -116,9 +145,9 @@ public class ArrayDeque<T> {
         if (_size == 0) {
             return _nextFirst + 1;
         }
-        int r = p % _size;
+        int r = p % _items.length;
         if (r < 0) {
-            r += size();
+            r += _items.length;
         }
         return r;
     }
