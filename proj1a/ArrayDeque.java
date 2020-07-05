@@ -8,7 +8,7 @@ public class ArrayDeque<T> {
     T [] _items;
 
     /** The size of this. */
-    int _size = 0;
+    int _size;
 
     /** The index of where the first item is to be inserted when addFirst is
      called. */
@@ -16,44 +16,41 @@ public class ArrayDeque<T> {
 
     /** The index of where the last item is to be inserted when nextLast is
      called. */
-    int _nextLast = modulo(_nextFirst + 1);
+    int _nextLast = _size;
 
     public ArrayDeque() {
         _items = (T[]) new Object[8];
+        _size = 0;
     }
 
-    /** Adds an item of type T to the front of the deque. */
+    /** Adds an item of type T to the front of the deque.
+     * STACK!!!!!!!!! */
     public void addFirst(T o) {
-        if (_size == 0 || Arrays.asList(_items).contains(null)) {
-            _items[modulo(_nextFirst)] = o;
-            _size += 1;
-            _nextFirst = modulo(_nextFirst - 1);
-        } else {
-            T[] oldItems = _items.clone();
-            System.arraycopy(oldItems, 0, _items, 1, oldItems.length - 1);
-            _items[0] = o;
-            _size += 1;
-            _nextFirst = _size - 1;
-            _nextLast += 1;
+        if (_size == _items.length) {
+            resize(getSize() * 2);
+        }
+        T oldFirst = _items[_nextFirst + 1];
+        _items[_nextFirst--] = o;
+        _size += 1;
+        if (getSize() == _items.length) {
+            // set nextFirst to something.
         }
 
     }
 
-    /** Adds an item of type T to the back of the deque. */
+    /** Adds an item of type T to the back of the deque.
+     * QUEUE!!!!!!! AKA: ENQUEUE. UPDATED. */
     public void addLast(T o) {
 
-        if (_size == 0 || Arrays.asList(_items).contains(null)) {
-            _items[modulo(_nextLast)] = o;
-            _size += 1;
-            _nextLast = modulo(_nextLast + 1);
-        } else {
-            T[] oldItems = _items.clone();
-            System.arraycopy(oldItems, 0, _items, 0, oldItems.length);
-            _items[oldItems.length] = o;
-            _size += 1;
-            _nextLast += 1;
-        }
+        if (getSize() == _items.length) {
+            resize(getSize() * 2);
 
+        }
+        _items[_nextLast++] = o;
+        if (_nextLast == _items.length) {
+            _nextLast = 0;
+        }
+        _size += 1;
     }
 
     /** Returns true if deque is empty, false otherwise. */
@@ -62,7 +59,7 @@ public class ArrayDeque<T> {
     }
 
     /** Returns the number of items in the deque. */
-    public int size() {
+    public int getSize() {
         return _size;
     }
 
@@ -84,15 +81,22 @@ public class ArrayDeque<T> {
 
     /** Removes and returns the item at the front of the deque. If no such
      * item exists, returns null.
+     * AKA Dequeue. UPDATED.
      */
     public T removeFirst() {
         if (isEmpty()) {
             return null;
         }
-        T removedFirst = _items[_nextFirst + 1];
-        _items[_nextFirst + 1] = null;
+        T removedFirst = _items[_nextFirst];
+        _items[_nextFirst] = null;
         _size -= 1;
-        _nextFirst = modulo(_nextFirst + 1);
+        _nextFirst += 1;
+        if (_nextFirst == _items.length) {
+            _nextFirst = 0;
+        }
+        if (getSize() > 0 && getSize() == _items.length / 4) {
+            resize(_items.length / 4);
+        }
         return removedFirst;
     }
 
@@ -100,14 +104,13 @@ public class ArrayDeque<T> {
      * item exists, returns null.
      */
     public T removeLast() {
+        T returnItem = _items[_size - 1];
         if (isEmpty()) {
             return null;
         }
-        T removedLast = _items[_nextLast - 1];
-        _items[_nextLast - 1] = null;
-        _size -= 1;
-        _nextLast = modulo(_nextLast - 1);
-        return removedLast;
+        if (getSize() == _items.length / 2) {
+            resize(_items.length / 2); //FIXME. Need to fix lengths.
+        }
     }
 
     /** Gets the item at the given index, where 0 is the front, 1 is the next
@@ -125,18 +128,11 @@ public class ArrayDeque<T> {
     /** Resizes the array when it is full.
      */
     public void resize(int newSize) {
-        _items = (T[]) new Object[(newSize)];
-    }
-
-    /** Return the value of P modulo the size. */
-    final int modulo(int p) {
-        if (_size == 0) {
-            return _nextFirst + 1;
-        }
-        int r = p % _size;
-        if (r < 0) {
-            r += size();
-        }
-        return r;
+        assert newSize > getSize();
+        T[] oldItems = (T[]) new Object[(newSize)];
+        System.arraycopy(_items, 0, oldItems, 0, getSize());
+        _items = oldItems;
+        _nextFirst = 0;
+        _nextLast = getSize();
     }
 }
