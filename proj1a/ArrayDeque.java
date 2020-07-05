@@ -130,7 +130,7 @@ public class ArrayDeque<T> {
     final int modulo(int p) {
         int r = p % _items.length;
         if (r < 0) {
-            r += size();
+            r += _items.length;
         }
         return r;
     }
