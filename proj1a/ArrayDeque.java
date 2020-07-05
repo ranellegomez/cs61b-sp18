@@ -31,17 +31,15 @@ public class ArrayDeque<T> {
         }
         T oldFirst = _items[_nextFirst + 1];
         _items[_nextFirst--] = o;
-        _size += 1;
-        if (getSize() == _items.length) {
-            // set nextFirst to something.
+        if (_nextFirst < 0) {
+            _nextFirst = _items.length - 1;
         }
-
+        _size += 1;
     }
 
     /** Adds an item of type T to the back of the deque.
      * QUEUE!!!!!!! AKA: ENQUEUE. UPDATED. */
     public void addLast(T o) {
-
         if (getSize() == _items.length) {
             resize(getSize() * 2);
 
@@ -111,6 +109,7 @@ public class ArrayDeque<T> {
         if (getSize() == _items.length / 2) {
             resize(_items.length / 2); //FIXME. Need to fix lengths.
         }
+        return returnItem;
     }
 
     /** Gets the item at the given index, where 0 is the front, 1 is the next
