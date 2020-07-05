@@ -14,7 +14,7 @@ public class ArrayDeque<T> {
 
     /** The index of where the last item is to be inserted when nextLast is
      called. */
-    int _nextLast = 1;
+    int _nextLast = modulo(_nextFirst + 1);
 
     public ArrayDeque() {
         _items = (T[]) new Object[8];
@@ -36,6 +36,20 @@ public class ArrayDeque<T> {
         }
 
     }
+
+    /** Gets the last index and updates it.
+     private int get_nextLast() {
+     if ((_items[(_nextFirst + 1) % _size] == null)) {
+     _nextLast = _nextFirst + 1;
+     } else {
+     for (int i = _nextFirst; i < _size; _size += 1) {
+     if (_items[i] == null) {
+     _nextLast = i;
+     }
+     }
+     }
+     return _nextLast;
+     } */
 
     /** Adds an item of type T to the back of the deque. */
     public void addLast(T o) {
@@ -122,15 +136,18 @@ public class ArrayDeque<T> {
 
     /** Resizes the array when it is full.
      */
-    public void resize(int capacity) {
-        _items = (T[]) new Object[capacity];
+    public void resize() {
+        _items = (T[]) new Object[(_size + 1) * 4];
     }
 
     /** Return the value of P modulo the size. */
     final int modulo(int p) {
-        int r = p % _items.length;
+        if (_size == 0) {
+            return _nextFirst + 1;
+        }
+        int r = p % _size;
         if (r < 0) {
-            r += _items.length;
+            r += size();
         }
         return r;
     }
