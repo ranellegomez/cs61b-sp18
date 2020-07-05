@@ -86,6 +86,9 @@ public class ArrayDeque<T> {
         _items[modulo(_nextLast)] = o;
         _nextLast = modulo(_nextLast + 1);
         _size += 1;
+<<<<<<< HEAD
+>>>>>>> parent of d5c7e3a... accounted for mod by 0
+=======
 >>>>>>> parent of d5c7e3a... accounted for mod by 0
     }
 
@@ -129,6 +132,9 @@ public class ArrayDeque<T> {
 =======
         T removedFirst = _items[_nextFirst];
         _items[_nextFirst] = null;
+<<<<<<< HEAD
+>>>>>>> parent of d5c7e3a... accounted for mod by 0
+=======
 >>>>>>> parent of d5c7e3a... accounted for mod by 0
         _nextFirst = modulo(_nextFirst + 1);
         _size -= 1;
@@ -149,6 +155,9 @@ public class ArrayDeque<T> {
 =======
         T removedLast = _items[_nextLast];
         _items[_nextLast] = null;
+<<<<<<< HEAD
+>>>>>>> parent of d5c7e3a... accounted for mod by 0
+=======
 >>>>>>> parent of d5c7e3a... accounted for mod by 0
         _nextLast = modulo(_nextLast - 1);
         _size -= 1;
