@@ -1,5 +1,4 @@
 import java.lang.reflect.Array;
-import java.util.Arrays;
 
 public class ArrayDeque<T> {
     /** The array containing the items of this ArrayDeque. */
@@ -22,15 +21,9 @@ public class ArrayDeque<T> {
 
     /** Adds an item of type T to the front of the deque. */
     public void addFirst(T o) {
-<<<<<<< HEAD
-        if (_size == 0 || Arrays.asList(_items).contains(null)) {
-            _items[modulo(_nextFirst)] = o;
-            _size += 1;
-            _nextFirst = modulo(_nextFirst - 1);
-=======
         _items[modulo(_nextFirst)] = o;
-        _nextFirst = modulo(_nextFirst - 1);
         _size += 1;
+        _nextFirst = modulo(_nextFirst - 1);
         //get_nextLast();
     }
 
@@ -38,58 +31,22 @@ public class ArrayDeque<T> {
     private int get_nextLast() {
         if ((_items[(_nextFirst + 1) % _size] == null)) {
             _nextLast = _nextFirst + 1;
->>>>>>> parent of d5c7e3a... accounted for mod by 0
         } else {
-            T[] oldItems = _items.clone();
-            resize(2 * _size);
-            System.arraycopy(oldItems, 0, _items, 1, oldItems.length - 1);
-            _items[0] = o;
-            _size += 1;
-            _nextFirst = _size - 1;
-            _nextLast += 1;
+            for (int i = _nextFirst; i < _size; _size += 1) {
+                if (_items[i] == null) {
+                    _nextLast = i;
+                }
+            }
         }
-
+        return _nextLast;
     }
-
-    /** Gets the last index and updates it.
-     private int get_nextLast() {
-     if ((_items[(_nextFirst + 1) % _size] == null)) {
-     _nextLast = _nextFirst + 1;
-     } else {
-     for (int i = _nextFirst; i < _size; _size += 1) {
-     if (_items[i] == null) {
-     _nextLast = i;
-     }
-     }
-     }
-     return _nextLast;
-     } */
 
     /** Adds an item of type T to the back of the deque. */
     public void addLast(T o) {
-<<<<<<< HEAD
-
-        if (_size == 0 || Arrays.asList(_items).contains(null)) {
-            _items[modulo(_nextLast)] = o;
-            _size += 1;
-            _nextLast = modulo(_nextLast + 1);
-        } else {
-            T[] oldItems = _items.clone();
-            resize(2 * _size);
-            System.arraycopy(oldItems, 0, _items, 0, oldItems.length);
-            _items[oldItems.length] = o;
-            _size += 1;
-            _nextLast += 1;
-        }
-
-=======
         _items[modulo(_nextLast)] = o;
-        _nextLast = modulo(_nextLast + 1);
         _size += 1;
-<<<<<<< HEAD
->>>>>>> parent of d5c7e3a... accounted for mod by 0
-=======
->>>>>>> parent of d5c7e3a... accounted for mod by 0
+        _nextLast = modulo(_nextLast + 1);
+
     }
 
     /** Returns true if deque is empty, false otherwise. */
@@ -121,23 +78,14 @@ public class ArrayDeque<T> {
     /** Removes and returns the item at the front of the deque. If no such
      * item exists, returns null.
      */
-    public T removeFirst() { // Like removing from the top of the queue.
+    public T removeFirst() {
         if (isEmpty()) {
             return null;
         }
-<<<<<<< HEAD
-        T removedFirst = _items[_nextFirst + 1];
-        _items[_nextFirst + 1] = null;
-        _size -= 1;
-=======
         T removedFirst = _items[_nextFirst];
         _items[_nextFirst] = null;
-<<<<<<< HEAD
->>>>>>> parent of d5c7e3a... accounted for mod by 0
-=======
->>>>>>> parent of d5c7e3a... accounted for mod by 0
-        _nextFirst = modulo(_nextFirst + 1);
         _size -= 1;
+        _nextFirst = modulo(_nextFirst + 1);
         return removedFirst;
     }
 
@@ -148,19 +96,10 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-<<<<<<< HEAD
-        T removedLast = _items[_nextLast - 1];
-        _items[_nextLast - 1] = null;
-        _size -= 1;
-=======
         T removedLast = _items[_nextLast];
         _items[_nextLast] = null;
-<<<<<<< HEAD
->>>>>>> parent of d5c7e3a... accounted for mod by 0
-=======
->>>>>>> parent of d5c7e3a... accounted for mod by 0
-        _nextLast = modulo(_nextLast - 1);
         _size -= 1;
+        _nextLast = modulo(_nextLast - 1);
         return removedLast;
     }
 
@@ -169,21 +108,14 @@ public class ArrayDeque<T> {
      * the deque!
      */
     public T get(int index) {
-        if (index >= _size) {
-            return null;
-        } else {
-            return _items[index];
-        }
-    }
-
-    /** Resizes the array when it is full.
-     */
-    public void resize(int max) {
-        _items = (T[]) new Object[max];
+        return _items[index];
     }
 
     /** Return the value of P modulo the size. */
     final int modulo(int p) {
+        if (_size == 0) {
+            return _nextFirst + 1;
+        }
         int r = p % _size;
         if (r < 0) {
             r += size();
