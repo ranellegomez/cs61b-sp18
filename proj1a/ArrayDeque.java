@@ -16,7 +16,7 @@ public class ArrayDeque<T> {
 
     /** The index of where the last item is to be inserted when nextLast is
      called. */
-    int _nextLast = _size;
+    int _nextLast = 1;
 
     public ArrayDeque() {
         _items = (T[]) new Object[8];
@@ -29,11 +29,10 @@ public class ArrayDeque<T> {
         if (_size == _items.length) {
             resize(getSize() * 2);
         }
-        T oldFirst = _items[_nextFirst + 1];
-        _items[_nextFirst--] = o;
-        if (_nextFirst < 0) {
+        if (_items[0] != null && _nextFirst == 0) {
             _nextFirst = _items.length - 1;
         }
+        _items[_nextFirst--] = o;
         _size += 1;
     }
 
@@ -42,12 +41,11 @@ public class ArrayDeque<T> {
     public void addLast(T o) {
         if (getSize() == _items.length) {
             resize(getSize() * 2);
-
+        }
+        if (_items[0] != null && _nextLast == 0) {
+            _nextLast += 1;
         }
         _items[_nextLast++] = o;
-        if (_nextLast == _items.length) {
-            _nextLast = 0;
-        }
         _size += 1;
     }
 
@@ -85,16 +83,17 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
+        if (_nextFirst == _items.length - 1) {
+            _nextFirst = 0;
+        } else {
+            _nextFirst += 1;
+        }
         T removedFirst = _items[_nextFirst];
         _items[_nextFirst] = null;
-        _size -= 1;
-        _nextFirst += 1;
-        if (_nextFirst == _items.length) {
-            _nextFirst = 0;
-        }
         if (getSize() > 0 && getSize() == _items.length / 4) {
             resize(_items.length / 4);
         }
+        _size -= 1;
         return removedFirst;
     }
 
@@ -102,14 +101,16 @@ public class ArrayDeque<T> {
      * item exists, returns null.
      */
     public T removeLast() {
-        T returnItem = _items[_size - 1];
         if (isEmpty()) {
             return null;
         }
+        T removedLast = _items[_nextLast - 1];
+        _size -= 1;
+        _items[--_nextLast] = null;
         if (getSize() == _items.length / 2) {
             resize(_items.length / 2); //FIXME. Need to fix lengths.
         }
-        return returnItem;
+        return removedLast;
     }
 
     /** Gets the item at the given index, where 0 is the front, 1 is the next
@@ -128,10 +129,12 @@ public class ArrayDeque<T> {
      */
     public void resize(int newSize) {
         assert newSize > getSize();
-        T[] oldItems = (T[]) new Object[(newSize)];
-        System.arraycopy(_items, 0, oldItems, 0, getSize());
-        _items = oldItems;
-        _nextFirst = 0;
+        T[] newItems = (T[]) new Object[(newSize)];
+        for (int i = 1; i < _items.length; i += 1) {
+            newItems[i - 1] = _items[(_nextFirst + i) % _items.length];
+        }
+        _items = newItems;
+        _nextFirst = newItems.length - 1;
         _nextLast = getSize();
     }
 }
