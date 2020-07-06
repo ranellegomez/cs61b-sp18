@@ -92,19 +92,18 @@ public class ArrayDeque<T> {
     public T removeLast() {
         if (isEmpty()) {
             return null;
-        } else if (size() <= _items.length / 4) {
-            T oldLast = _items[modulo(_nextLast - 1)];
-            _items[modulo(_nextLast - 1)] = null;
-            _nextLast = modulo(_nextLast - 1);
-            _size -= 1;
-            resize(_items.length / 4);
-            return oldLast;
         }
-        T removedLast = _items[_nextLast - 1];
-        _items[_nextLast - 1] = null;
+        int actualLast = (_nextLast - 1 < 0) ? _items.length - 1 :
+                _nextLast - 1;
+        T oldLast = _items[actualLast];
+        _items[actualLast] = null;
         _size -= 1;
-        _nextLast = modulo(_nextLast - 1);
-        return removedLast;
+        _nextLast = (_nextLast - 1 < 0) ? _items.length - 1 :
+                _nextLast - 1;
+        if (size() > 0 && size() == _items.length / 4) {
+            resize(_items.length / 2);
+        }
+        return oldLast;
     }
 
     /** Gets the item at the given index, where 0 is the front, 1 is the next
