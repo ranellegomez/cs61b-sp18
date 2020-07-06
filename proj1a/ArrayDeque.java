@@ -24,17 +24,16 @@ public class ArrayDeque<T> {
     public void addFirst(T o) {
         if (isEmpty() || Arrays.asList(_items).contains(null)) {
             _items[modulo(_nextFirst)] = o;
-            _size += 1;
             _nextFirst = modulo(_nextFirst - 1);
         } else { // The case when the array is full. We need to shift
             // nextLast up by one index, because we shift the preceding
             // elements to accomodate for the new "first" element.
             resize(2 * _size, true);
             _items[0] = o;
-            _size += 1;
             _nextFirst = _items.length - 1;
             _nextLast += 1;
         }
+        _size += 1;
 
     }
 
@@ -43,15 +42,14 @@ public class ArrayDeque<T> {
 
         if (_size == 0 || Arrays.asList(_items).contains(null)) {
             _items[modulo(_nextLast)] = o;
-            _size += 1;
             _nextLast = modulo(_nextLast + 1);
         } else {
             resize(_items.length * 4, false);
             _nextFirst = 0;
             _items[_size] = o;
-            _size += 1;
             _nextLast = _size;
         }
+        _size += 1;
     }
 
     /** Returns true if deque is empty, false otherwise. */
@@ -142,23 +140,11 @@ public class ArrayDeque<T> {
         if (capacity > _items.length && isAddFirst) {
             // We reserve the 0th spot for the new item in addFirst.
             int j = 1;
-            for (int i = modulo(_nextFirst + 1); i < _items.length; i += 1) {
-                temp[j++] = _items[i];
-            }
-            for (int k = 0; k < modulo(_nextFirst + 1); k += 1) {
-                temp[j++] = _items[k];
-            }
-            _items = temp;
+            fillFromStart((T[]) temp, j);
         } else if (capacity > _items.length && !isAddFirst) {
             // We reserve the 0th spot for the new item in addFirst.
             int j = 0;
-            for (int i = modulo(_nextFirst + 1); i < _items.length; i += 1) {
-                temp[j++] = _items[i];
-            }
-            for (int k = 0; k < modulo(_nextFirst + 1); k += 1) {
-                temp[j++] = _items[k];
-            }
-            _items = temp;
+            fillFromStart((T[]) temp, j);
         } else {
             // FIXME. Revised.
             int j = 0;
@@ -173,8 +159,21 @@ public class ArrayDeque<T> {
         }
     }
 
+    private void fillFromStart(T[] temp, int j) {
+        for (int i = modulo(_nextFirst + 1); i < _items.length; i += 1) {
+            temp[j++] = _items[i];
+        }
+        for (int k = 0; k < modulo(_nextFirst + 1); k += 1) {
+            temp[j++] = _items[k];
+        }
+        _items = temp;
+    }
+
     /** Return the value of P modulo the size. */
     final int modulo(int p) {
+        if (_size == 0) {
+            return _nextFirst + 1;
+        }
         int r = p % _items.length;
         if (r < 0) {
             r += _items.length;
