@@ -123,7 +123,7 @@ public class ArrayDeque<T> {
     public void resize(int capacity) {
         T[] temp = (T[]) new Object[capacity];
         for (int i = 0; i < size(); i += 1) {
-            temp[i] = _items[(_nextFirst + 1 + i) % _items.length];
+            temp[i] = _items[(_nextFirst + i) % _items.length];
         }
         _items = temp;
         _nextFirst = 0;
