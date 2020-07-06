@@ -70,22 +70,20 @@ public class ArrayDeque<T> {
      * item exists, returns null.
      */
     public T removeFirst() {
-        T oldFirst = _items[_nextFirst + 1];
         if (isEmpty()) {
             return null;
-        } else if (size() <= _items.length / 4) {
-            _items[modulo(_nextFirst + 1)] = null;
-            _nextFirst = modulo(_nextFirst + 1);
-            resize(_items.length / 4);
-            _nextFirst = _items.length - 1;
+        } else {
+            int actualFirst = (_nextFirst + 1) % _items.length;
+            T oldFirst = _items[actualFirst];
+            _items[actualFirst] = null;
             _size -= 1;
+            _nextFirst = (_nextFirst + 1 == _items.length) ? 0 : _nextFirst + 1;
+
+            if (size() > 0 && size() == _items.length / 4) {
+                resize(_items.length / 2);
+            }
             return oldFirst;
         }
-        T removedFirst = _items[modulo(_nextFirst + 1)];
-        _items[modulo(_nextFirst + 1)] = null;
-        _size -= 1;
-        _nextFirst = modulo(_nextFirst + 1);
-        return removedFirst;
     }
 
     /** Removes and returns the item at the back of the deque. If no such
