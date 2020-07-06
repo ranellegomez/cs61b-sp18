@@ -47,6 +47,7 @@ public class ArrayDeque<T> {
             _nextLast = modulo(_nextLast + 1);
         } else {
             resize(_items.length * 4, false);
+            _nextFirst = 0;
             _items[_size] = o;
             _size += 1;
             _nextLast = _size;
@@ -127,10 +128,10 @@ public class ArrayDeque<T> {
      * the deque!
      */
     public T get(int index) {
-        if (index >= _size) {
+        if (index >= _size || index < 0) {
             return null;
         } else {
-            return _items[modulo(_nextFirst + 1 + index)];
+            return _items[modulo(_nextFirst + index)];
         }
     }
 
@@ -174,9 +175,6 @@ public class ArrayDeque<T> {
 
     /** Return the value of P modulo the size. */
     final int modulo(int p) {
-        if (_size == 0) {
-            return _nextFirst + 1;
-        }
         int r = p % _items.length;
         if (r < 0) {
             r += _items.length;
