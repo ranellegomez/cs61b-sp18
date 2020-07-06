@@ -14,7 +14,7 @@ public class ArrayDeque<T> {
 
     /** The index of where the last item is to be inserted when nextLast is
      called. */
-    int _nextLast = modulo(_nextFirst + 1);
+    int _nextLast = 1;
 
     public ArrayDeque() {
         _items = (T[]) new Object[8];
@@ -22,33 +22,21 @@ public class ArrayDeque<T> {
 
     /** Adds an item of type T to the front of the deque. */
     public void addFirst(T o) {
-        if (isEmpty() || Arrays.asList(_items).contains(null)) {
-            _items[modulo(_nextFirst)] = o;
-            _nextFirst = modulo(_nextFirst - 1);
-        } else { // The case when the array is full. We need to shift
-            // nextLast up by one index, because we shift the preceding
-            // elements to accomodate for the new "first" element.
-            resize(2 * _size, true);
-            _items[0] = o;
-            _nextFirst = _items.length - 1;
-            _nextLast += 1;
+        if (size() == _items.length) {
+            resize(2 * _items.length);
         }
+        _items[_nextFirst--] = o;
+        _nextFirst = (_nextFirst < 0) ? _items.length - 1 : _nextFirst;
         _size += 1;
-
     }
 
     /** Adds an item of type T to the back of the deque. */
     public void addLast(T o) {
-
-        if (_size == 0 || Arrays.asList(_items).contains(null)) {
-            _items[modulo(_nextLast)] = o;
-            _nextLast = modulo(_nextLast + 1);
-        } else {
-            resize(_items.length * 4, false);
-            _nextFirst = 0;
-            _items[_size] = o;
-            _nextLast = _size;
+        if (size() == _items.length) {
+            resize(2 * _items.length);
         }
+        _items[_nextLast++] = o;
+        _nextLast = (_nextLast == _items.length) ? 0 : _nextLast;
         _size += 1;
     }
 
@@ -88,7 +76,7 @@ public class ArrayDeque<T> {
         } else if (size() <= _items.length / 4) {
             _items[modulo(_nextFirst + 1)] = null;
             _nextFirst = modulo(_nextFirst + 1);
-            resize(_items.length / 4, false);
+            resize(_items.length / 4);
             _nextFirst = _items.length - 1;
             _size -= 1;
             return oldFirst;
@@ -111,7 +99,7 @@ public class ArrayDeque<T> {
             _items[modulo(_nextLast - 1)] = null;
             _nextLast = modulo(_nextLast - 1);
             _size -= 1;
-            resize(_items.length / 4, false);
+            resize(_items.length / 4);
             return oldLast;
         }
         T removedLast = _items[_nextLast - 1];
@@ -135,44 +123,20 @@ public class ArrayDeque<T> {
 
     /** Resizes the array when it is full.
      */
-    public void resize(int capacity, boolean isAddFirst) {
+    public void resize(int capacity) {
         T[] temp = (T[]) new Object[capacity];
-        if (capacity > _items.length && isAddFirst) {
-            // We reserve the 0th spot for the new item in addFirst.
-            int j = 1;
-            fillFromStart((T[]) temp, j);
-        } else if (capacity > _items.length && !isAddFirst) {
-            // We reserve the 0th spot for the new item in addFirst.
-            int j = 0;
-            fillFromStart((T[]) temp, j);
-        } else {
-            // FIXME. Revised.
-            int j = 0;
-            for (int i = modulo(_nextFirst + 1); i < _size; i += 1) {
-
-                temp[j++] = _items[i];
-            }
-            for (int k = 0; k < _nextLast; k += 1) {
-                temp[j++] = _items[k];
-            }
-            _items = temp;
-        }
-    }
-
-    private void fillFromStart(T[] temp, int j) {
-        for (int i = modulo(_nextFirst + 1); i < _items.length; i += 1) {
-            temp[j++] = _items[i];
-        }
-        for (int k = 0; k < modulo(_nextFirst + 1); k += 1) {
-            temp[j++] = _items[k];
+        for (int i = 0; i < size(); i += 1) {
+            temp[i] = _items[(_nextFirst + 1 + i) % _items.length];
         }
         _items = temp;
+        _nextFirst = 0;
+        _nextLast = size();
     }
 
     /** Return the value of P modulo the size. */
     final int modulo(int p) {
         if (_size == 0) {
-            return _nextFirst + 1;
+            return p;
         }
         int r = p % _items.length;
         if (r < 0) {
