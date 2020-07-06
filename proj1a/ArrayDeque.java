@@ -114,7 +114,10 @@ public class ArrayDeque<T> {
         if (index >= _size || index < 0) {
             return null;
         } else {
-            return _items[(_nextFirst + index) % _items.length];
+            int actualFirst = (_nextFirst + 1 == _items.length) ? 0 :
+                    _nextFirst + 1;
+            int convertedIndex = (actualFirst + index) % _items.length;
+            return _items[convertedIndex];
         }
     }
 
