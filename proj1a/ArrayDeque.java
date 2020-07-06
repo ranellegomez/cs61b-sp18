@@ -131,7 +131,7 @@ public class ArrayDeque<T> {
         if (index >= _size || index < 0) {
             return null;
         } else {
-            return _items[modulo(_nextFirst + index)];
+            return _items[modulo(_nextFirst + 1 + index)];
         }
     }
 
