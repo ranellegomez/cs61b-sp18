@@ -79,7 +79,7 @@ public class ArrayDeque<T> {
             _size -= 1;
             _nextFirst = (_nextFirst + 1 == _items.length) ? 0 : _nextFirst + 1;
 
-            if (size() > 0 && size() == _items.length / 4) {
+            if (size() > 0 && size() <= _items.length / 4) {
                 resize(_items.length / 2);
             }
             return oldFirst;
@@ -100,7 +100,7 @@ public class ArrayDeque<T> {
         _size -= 1;
         _nextLast = (_nextLast - 1 < 0) ? _items.length - 1 :
                 _nextLast - 1;
-        if (size() > 0 && size() == _items.length / 4) {
+        if (size() > 0 && size() <= _items.length / 4) {
             resize(_items.length / 2);
         }
         return oldLast;
@@ -126,7 +126,7 @@ public class ArrayDeque<T> {
     public void resize(int capacity) {
         T[] temp = (T[]) new Object[capacity];
         for (int i = 0; i < size(); i += 1) {
-            temp[i] = _items[(_nextFirst + i) % _items.length];
+            temp[i] = _items[(_nextFirst + i + 1) % _items.length];
         }
         _items = temp;
         _nextFirst = 0;
