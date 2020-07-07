@@ -132,8 +132,8 @@ public class ArrayDeque<T> {
                     _items[(_nextFirst + i)] : _items[k++];
         }
         _items = temp;
-        _nextFirst = 0;
-        _nextLast = size();
+        _nextFirst = 0; // FIXME. Try changing to size - 1
+        _nextLast = size() + 1; // change to size if score decreases. 
     }
 
     /** Return the value of P modulo the size. */
