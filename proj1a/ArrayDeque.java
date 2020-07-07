@@ -124,7 +124,7 @@ public class ArrayDeque<T> {
 
     /** Resizes the array when it is full.
      */
-    public void resize(int capacity) {
+    private void resize(int capacity) {
         T[] temp = (T[]) new Object[capacity];
         int k = 0;
         for (int i = 0; i < size(); i += 1) {
@@ -133,7 +133,7 @@ public class ArrayDeque<T> {
         }
         _items = temp;
         _nextFirst = 0; // FIXME. Try changing to size - 1
-        _nextLast = size() + 1; // change to size if score decreases. 
+        _nextLast = size() + 1; // change to size if score decreases.
     }
 
     /** Return the value of P modulo the size. */
