@@ -73,7 +73,8 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         } else {
-            int actualFirst = (_nextFirst + 1) % _items.length;
+            int actualFirst = (_nextFirst + 1 == _items.length) ? 0 :
+                    (_nextFirst + 1);
             T oldFirst = _items[actualFirst];
             _items[actualFirst] = null;
             _size -= 1;
@@ -125,8 +126,10 @@ public class ArrayDeque<T> {
      */
     public void resize(int capacity) {
         T[] temp = (T[]) new Object[capacity];
+        int k = 0;
         for (int i = 0; i < size(); i += 1) {
-            temp[i] = _items[(_nextFirst + i + 1) % _items.length];
+            temp[i] = (_nextFirst + i < _items.length) ?
+                    _items[(_nextFirst + i)] : _items[k++];
         }
         _items = temp;
         _nextFirst = 0;
