@@ -1,6 +1,3 @@
-import java.lang.reflect.Array;
-import java.util.Arrays;
-
 public class ArrayDeque<T> {
     /** The array containing the items of this ArrayDeque. */
     T [] _items;
@@ -117,7 +114,7 @@ public class ArrayDeque<T> {
         } else {
             int actualFirst = (_nextFirst + 1 == _items.length) ? 0 :
                     _nextFirst + 1;
-            int convertedIndex = (actualFirst + index) % _items.length;
+            int convertedIndex = modulo(actualFirst + index);
             return _items[convertedIndex];
         }
     }
@@ -128,12 +125,25 @@ public class ArrayDeque<T> {
         T[] temp = (T[]) new Object[capacity];
         int k = 0;
         for (int i = 0; i < size(); i += 1) {
-            temp[i] = (_nextFirst + i < _items.length) ?
+            temp[modulo(-i)] =
+                    (_nextFirst + i < _items.length) ?
                     _items[(_nextFirst + i)] : _items[k++];
         }
         _items = temp;
-        _nextFirst = 0; // FIXME. Try changing to size - 1
+        _nextFirst = _items.length - 1; // FIXME. Try changing to size - 1
         _nextLast = size() + 1; // change to size if score decreases.
+    }
+
+    /** Return the value of P modulo LEN. */
+    final int moduloLength(int p, int len) {
+        if (_size == 0) {
+            return p;
+        }
+        int r = p % len;
+        if (r < 0) {
+            r += len;
+        }
+        return r;
     }
 
     /** Return the value of P modulo the size. */
