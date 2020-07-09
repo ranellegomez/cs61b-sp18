@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 /** Performs some basic linked list tests. */
 public class ArrayDequeTest {
 
@@ -38,14 +36,9 @@ public class ArrayDequeTest {
     public static void addIsEmptySizeTest() {
         System.out.println("Running add/isEmpty/Size test.");
         ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
+        ArrayDeque<Integer> lld2 = new ArrayDeque<Integer>();
 
         boolean passed = checkEmpty(true, lld1.isEmpty());
-
-        for (int i = 0; i < 15; i += 1) {
-            //lld1.addFirst(i);
-            //lld1.addLast(i);
-        }
-
 
         lld1.addFirst(0);
         lld1.removeLast();      //==> 0
@@ -62,23 +55,18 @@ public class ArrayDequeTest {
         lld1.addLast(12);
         lld1.addFirst(13);
         lld1.get(2);
-        /*
-        System.out.println("This is lld1.get(0) " + lld1.get(0));
-        System.out.println("This is lld1.get(1) " + lld1.get(1));
-        System.out.println("This is lld1.get(2) " + lld1.get(2));
-        System.out.println("This is lld1.get(3) " + lld1.get(3));
 
-         */
-
-
-
-
-        for (int i = 0; i < lld1._size; i += 1) {
-            System.out.println(lld1.get(i));
-        }
-        System.out.println(Arrays.toString(lld1._items));
-
-
+        lld2.addLast(0);
+        lld2.addLast(1);
+        lld2.addFirst(2);
+        lld2.addLast(3);
+        lld2.addFirst(4);
+        System.out.println(lld2.removeLast());
+        System.out.println(lld2.removeLast());
+        lld2.addFirst(7);
+        lld2.addLast(8);
+        System.out.println(lld2.removeFirst());
+        lld2.get(0);
 
     }
 

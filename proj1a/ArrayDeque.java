@@ -130,7 +130,7 @@ public class ArrayDeque<T> {
         } else {
             int actualFirst = (_nextFirst + 1 == _items.length) ? 0 :
                     _nextFirst + 1;
-            T[] flattened =  (T[]) new Object[size()];
+            T[] flattened =  (T[]) new Object[_items.length];
 
             int j = 0;
             for (int i = actualFirst; i < _items.length; i += 1) {
@@ -138,7 +138,7 @@ public class ArrayDeque<T> {
                     flattened[j++] = _items[i];
                 }
             }
-            for (int k = 0; j < actualFirst; k += 1) {
+            for (int k = 0; k < actualFirst; k += 1) {
                 if (_items[k] != null) {
                     flattened[j++] = _items[k];
                 }
