@@ -115,6 +115,7 @@ public class ArrayDeque<T> {
             int actualFirst = (_nextFirst + 1 == _items.length) ? 0 :
                     _nextFirst + 1;
             int convertedIndex = (actualFirst + index) % _items.length;
+            System.out.println("For " + "index " + index + " we have " + _items[convertedIndex]);
             return _items[convertedIndex];
         }
     }
@@ -130,7 +131,8 @@ public class ArrayDeque<T> {
         }
         _items = temp;
         _nextFirst = 0;
-        _nextLast = size();
+        _items[size()] = _items[_nextLast - 1];
+        _nextLast = size() + 1;
     }
 
     /** Return the value of P modulo the size. */

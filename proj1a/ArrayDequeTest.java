@@ -44,7 +44,8 @@ public class ArrayDequeTest {
         boolean passed = checkEmpty(true, lld1.isEmpty());
 
         for (int i = 0; i < 15; i += 1) {
-            lld1.addFirst(i);
+            //lld1.addFirst(i);
+            lld1.addLast(i);
         }
         for (int i = 0; i < 15; i += 1) {
             System.out.println(lld1.get(i));
