@@ -45,16 +45,38 @@ public class ArrayDequeTest {
 
         for (int i = 0; i < 15; i += 1) {
             //lld1.addFirst(i);
-            lld1.addLast(i);
+            //lld1.addLast(i);
         }
-        for (int i = 0; i < 15; i += 1) {
+
+
+        lld1.addFirst(0);
+        lld1.removeLast();      //==> 0
+        lld1.addLast(2);
+        lld1.removeLast();      //==> 2
+        lld1.addLast(4);
+        lld1.removeFirst();     //==> 4
+        lld1.addFirst(6);
+        lld1.addLast(7);
+        lld1.addLast(8);    /// FIXME. The problem is here.
+        lld1.removeFirst();     //==> 6
+        lld1.addFirst(10);
+        lld1.removeFirst();     //==> 10
+        lld1.addLast(12);
+        lld1.addFirst(13);
+        lld1.get(2);
+
+
+
+
+        for (int i = 0; i < lld1.size(); i += 1) {
             System.out.println(lld1.get(i));
         }
         System.out.println(Arrays.toString(lld1._items));
 
-
+        /**
         passed = checkSize(15, lld1.size()) && passed;
         passed = checkEmpty(false, lld1.isEmpty()) && passed;
+         */
 
     }
 
