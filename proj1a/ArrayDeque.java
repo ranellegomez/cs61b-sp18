@@ -70,12 +70,12 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         } else {
-            int actualFirst = (_nextFirst + 1 == _items.length) ? getLastAddedBeforeResize() :
+            int actualFirst = (_nextFirst + 1 == _items.length) ? 0 :
                     (_nextFirst + 1);
             T oldFirst = _items[actualFirst];
             _items[actualFirst] = null;
             _size -= 1;
-            _nextFirst = (_nextFirst + 1 == _items.length) ? getLastAddedBeforeResize() : _nextFirst + 1;
+            _nextFirst = (_nextFirst + 1 == _items.length) ? 0 : _nextFirst + 1;
 
             if (size() > 0 && size() <= _items.length / 4) {
                 resize(_items.length / 2);
@@ -112,65 +112,25 @@ public class ArrayDeque<T> {
         if (index >= _size || index < 0) {
             return null;
         } else {
-            int actualFirst = (_nextFirst + 1 == _items.length) ? getLastAddedBeforeResize() :
+            int actualFirst = (_nextFirst + 1 == _items.length) ? 0 :
                     _nextFirst + 1;
-            int convertedIndex = (_nextFirst + 1 == _items.length) ?
-                    actualFirst - index :
-                    (actualFirst + index >= _items.length) ?
-                            getLastAddedBeforeResize() - ((actualFirst + index) % _items.length) :
-                    actualFirst + index;
+            int convertedIndex = (actualFirst + index) % _items.length;
             return _items[convertedIndex];
         }
     }
 
     /** Resizes the array when it is full.
      */
-    private void resize(int capacity) {
+    public void resize(int capacity) {
         T[] temp = (T[]) new Object[capacity];
         int k = 0;
         for (int i = 0; i < size(); i += 1) {
-            temp[modulo(-i)] =
-                    (_nextFirst + i < _items.length) ?
+            temp[i] = (_nextFirst + i < _items.length) ?
                     _items[(_nextFirst + i)] : _items[k++];
         }
         _items = temp;
-        _nextFirst = _items.length - 1; // FIXME. Try changing to size - 1
-        _nextLast = size() + 1; // change to size if score decreases.
-    }
-
-    private int getLastAddedBeforeResize() {
-        int result = 0;
-        for (int i = 0; i < _items.length; i += 1) {
-            if (_items[i] != null) {
-                result = i;
-            } else {
-                return result;
-            }
-        }
-        return result;
-    }
-
-    private int getActualFirst() {
-        int result = 0;
-        for (int i = 0; i < size(); i += 1) {
-            if (_items[i] != null) {
-                result += 1;
-            }
-        }
-        result = modulo(_nextFirst + result);
-        return result;
-    }
-
-    /** Return the value of P modulo LEN. */
-    final int moduloLength(int p, int len) {
-        if (_size == 0) {
-            return p;
-        }
-        int r = p % len;
-        if (r < 0) {
-            r += len;
-        }
-        return r;
+        _nextFirst = 0;
+        _nextLast = size();
     }
 
     /** Return the value of P modulo the size. */
