@@ -70,12 +70,12 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         } else {
-            int actualFirst = (_nextFirst + 1 == _items.length) ? 0 :
+            int actualFirst = (_nextFirst + 1 == _items.length) ? getLastAddedBeforeResize() :
                     (_nextFirst + 1);
             T oldFirst = _items[actualFirst];
             _items[actualFirst] = null;
             _size -= 1;
-            _nextFirst = (_nextFirst + 1 == _items.length) ? 0 : _nextFirst + 1;
+            _nextFirst = (_nextFirst + 1 == _items.length) ? getLastAddedBeforeResize() : _nextFirst + 1;
 
             if (size() > 0 && size() <= _items.length / 4) {
                 resize(_items.length / 2);
