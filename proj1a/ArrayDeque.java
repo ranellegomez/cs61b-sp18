@@ -112,9 +112,13 @@ public class ArrayDeque<T> {
         if (index >= _size || index < 0) {
             return null;
         } else {
-            int actualFirst = (_nextFirst + 1 == _items.length) ? 0 :
+            int actualFirst = (_nextFirst + 1 == _items.length) ? getLastAddedBeforeResize() :
                     _nextFirst + 1;
-            int convertedIndex = modulo(actualFirst + index);
+            int convertedIndex = (_nextFirst + 1 == _items.length) ?
+                    actualFirst - index :
+                    (actualFirst + index >= _items.length) ?
+                            getLastAddedBeforeResize() - ((actualFirst + index) % _items.length) :
+                    actualFirst + index;
             return _items[convertedIndex];
         }
     }
@@ -132,6 +136,29 @@ public class ArrayDeque<T> {
         _items = temp;
         _nextFirst = _items.length - 1; // FIXME. Try changing to size - 1
         _nextLast = size() + 1; // change to size if score decreases.
+    }
+
+    private int getLastAddedBeforeResize() {
+        int result = 0;
+        for (int i = 0; i < _items.length; i += 1) {
+            if (_items[i] != null) {
+                result = i;
+            } else {
+                return result;
+            }
+        }
+        return result;
+    }
+
+    private int getActualFirst() {
+        int result = 0;
+        for (int i = 0; i < size(); i += 1) {
+            if (_items[i] != null) {
+                result += 1;
+            }
+        }
+        result = modulo(_nextFirst + result);
+        return result;
     }
 
     /** Return the value of P modulo LEN. */
