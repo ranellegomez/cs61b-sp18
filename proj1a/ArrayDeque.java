@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
 public class ArrayDeque<T> {
     /** The array containing the items of this ArrayDeque. */
     T [] _items;
@@ -44,11 +48,9 @@ public class ArrayDeque<T> {
     /** Returns the number of non-null elements in the deque. */
     public void updateSize() {
         _size = 0;
-        for (int i = 0; i < _items.length; i += 1) {
-            if (_items[i] != null) {
-                _size++;
-            }
-        }
+        ArrayList l = new ArrayList(Arrays.asList(_items));
+        l.removeAll(Collections.singleton(null));
+        _size = l.size();
     }
 
     /** Returns true if deque is empty, false otherwise. */
