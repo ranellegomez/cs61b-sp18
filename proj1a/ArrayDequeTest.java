@@ -37,8 +37,6 @@ public class ArrayDequeTest {
      * && is the "and" operation. */
     public static void addIsEmptySizeTest() {
         System.out.println("Running add/isEmpty/Size test.");
-        System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
-        // /*
         ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
 
         boolean passed = checkEmpty(true, lld1.isEmpty());
@@ -64,19 +62,23 @@ public class ArrayDequeTest {
         lld1.addLast(12);
         lld1.addFirst(13);
         lld1.get(2);
+        /*
+        System.out.println("This is lld1.get(0) " + lld1.get(0));
+        System.out.println("This is lld1.get(1) " + lld1.get(1));
+        System.out.println("This is lld1.get(2) " + lld1.get(2));
+        System.out.println("This is lld1.get(3) " + lld1.get(3));
+
+         */
 
 
 
 
-        for (int i = 0; i < lld1.size(); i += 1) {
+        for (int i = 0; i < lld1._size; i += 1) {
             System.out.println(lld1.get(i));
         }
         System.out.println(Arrays.toString(lld1._items));
 
-        /**
-        passed = checkSize(15, lld1.size()) && passed;
-        passed = checkEmpty(false, lld1.isEmpty()) && passed;
-         */
+
 
     }
 

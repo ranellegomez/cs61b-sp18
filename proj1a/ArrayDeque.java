@@ -13,6 +13,10 @@ public class ArrayDeque<T> {
      called. */
     int _nextLast = 1;
 
+    /** The index of where the last item is to be inserted when nextLast is
+     called. */
+    int _instantiatedSize = 8;
+
     public ArrayDeque() {
         _items = (T[]) new Object[8];
     }
@@ -24,7 +28,7 @@ public class ArrayDeque<T> {
         }
         _items[_nextFirst--] = o;
         _nextFirst = (_nextFirst < 0) ? _items.length - 1 : _nextFirst;
-        _size += 1;
+        updateSize();
     }
 
     /** Adds an item of type T to the back of the deque. */
@@ -34,7 +38,17 @@ public class ArrayDeque<T> {
         }
         _items[_nextLast++] = o;
         _nextLast = (_nextLast == _items.length) ? 0 : _nextLast;
-        _size += 1;
+        updateSize();
+    }
+
+    /** Returns the number of non-null elements in the deque. */
+    public void updateSize() {
+        _size = 0;
+        for (int i = 0; i < _items.length; i += 1) {
+            if (_items[i] != null) {
+                _size++;
+            }
+        }
     }
 
     /** Returns true if deque is empty, false otherwise. */
@@ -74,7 +88,7 @@ public class ArrayDeque<T> {
                     (_nextFirst + 1);
             T oldFirst = _items[actualFirst];
             _items[actualFirst] = null;
-            _size -= 1;
+            updateSize();
             _nextFirst = (_nextFirst + 1 == _items.length) ? 0 : _nextFirst + 1;
 
             if (size() > 0 && size() <= _items.length / 4) {
@@ -95,7 +109,7 @@ public class ArrayDeque<T> {
                 _nextLast - 1;
         T oldLast = _items[actualLast];
         _items[actualLast] = null;
-        _size -= 1;
+        updateSize();
         _nextLast = (_nextLast - 1 < 0) ? _items.length - 1 :
                 _nextLast - 1;
         if (size() > 0 && size() <= _items.length / 4) {
@@ -114,9 +128,25 @@ public class ArrayDeque<T> {
         } else {
             int actualFirst = (_nextFirst + 1 == _items.length) ? 0 :
                     _nextFirst + 1;
+            T[] flattened =  (T[]) new Object[size()];
+
+            int j = 0;
+            for (int i = actualFirst; i < _items.length; i += 1) {
+                if (_items[i] != null) {
+                    flattened[j++] = _items[i];
+                }
+            }
+            for (int k = 0; j < actualFirst; k += 1) {
+                if (_items[k] != null) {
+                    flattened[j++] = _items[k];
+                }
+            }
+
             int convertedIndex = (actualFirst + index) % _items.length;
+
             System.out.println("For " + "index " + index + " we have " + _items[convertedIndex]);
-            return _items[convertedIndex];
+            //return _items[convertedIndex];
+            return flattened[index];
         }
     }
 
@@ -124,15 +154,20 @@ public class ArrayDeque<T> {
      */
     public void resize(int capacity) {
         T[] temp = (T[]) new Object[capacity];
-        int k = 0;
-        for (int i = 0; i < size(); i += 1) {
-            temp[i] = (_nextFirst + i < _items.length) ?
+        int k = 0, j = 0;
+        T elem;
+        for (int i = 0; i < _items.length; i += 1) {
+
+            elem = (_nextFirst + i < _items.length) ?
                     _items[(_nextFirst + i)] : _items[k++];
+            if (elem != null) {
+                temp[j++] = elem;
+            }
         }
         _items = temp;
-        _nextFirst = 0;
-        _items[size()] = _items[_nextLast - 1];
-        _nextLast = size() + 1;
+        _nextFirst = _items.length - 1;
+        //_items[size()] = _items[_nextLast - 1];
+        _nextLast = size();
     }
 
     /** Return the value of P modulo the size. */
