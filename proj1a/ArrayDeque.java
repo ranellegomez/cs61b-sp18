@@ -13,8 +13,7 @@ public class ArrayDeque<T> {
      called. */
     int _nextLast = 1;
 
-    /** The index of where the last item is to be inserted when nextLast is
-     called. */
+    /** The total number of elements (including nulls) in _items. */
     int _instantiatedSize = 8;
 
     public ArrayDeque() {
@@ -44,6 +43,7 @@ public class ArrayDeque<T> {
     /** Returns the number of non-null elements in the deque. */
     public void updateSize() {
         _size = 0;
+        //FIXME. Make this efficient without using Arrays library.
         for (int i = 0; i < _items.length; i += 1) {
             _size = (_items[i] == null) ? _size : _size + 1;
         }
@@ -127,23 +127,19 @@ public class ArrayDeque<T> {
             int actualFirst = (_nextFirst + 1 == _items.length) ? 0 :
                     _nextFirst + 1;
             T[] flattened =  (T[]) new Object[_items.length];
-
             int j = 0;
+
             for (int i = actualFirst; i < _items.length; i += 1) {
                 if (_items[i] != null) {
                     flattened[j++] = _items[i];
                 }
             }
+
             for (int k = 0; k < actualFirst; k += 1) {
                 if (_items[k] != null) {
                     flattened[j++] = _items[k];
                 }
             }
-
-            int convertedIndex = (actualFirst + index) % _items.length;
-
-            System.out.println("For " + "index " + index + " we have " + _items[convertedIndex]);
-            //return _items[convertedIndex];
             return flattened[index];
         }
     }
@@ -164,7 +160,9 @@ public class ArrayDeque<T> {
         }
         _items = temp;
         _nextFirst = _items.length - 1;
-        //_items[size()] = _items[_nextLast - 1];
+        /** FIXME. May need to invoke this line later.
+         _items[size()] = _items[_nextLast - 1];
+         */
         _nextLast = size();
     }
 

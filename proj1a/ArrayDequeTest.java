@@ -48,7 +48,7 @@ public class ArrayDequeTest {
         lld1.removeFirst();     //==> 4
         lld1.addFirst(6);
         lld1.addLast(7);
-        lld1.addLast(8);    /// FIXME. The problem is here.
+        lld1.addLast(8);
         lld1.removeFirst();     //==> 6
         lld1.addFirst(10);
         lld1.removeFirst();     //==> 10
@@ -75,7 +75,6 @@ public class ArrayDequeTest {
 
         System.out.println("Running add/remove test.");
 
-        System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
         // /*
         LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
         // should be empty
