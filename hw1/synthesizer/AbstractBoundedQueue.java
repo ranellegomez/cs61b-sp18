@@ -1,6 +1,6 @@
 package synthesizer;
 
-public abstract class AbstractBoundedQueue implements BoundedQueue {
+public abstract class AbstractBoundedQueue<T> implements BoundedQueue<T> {
     /** Returns the number of items I can hold. */
     protected int _capacity;
 
