@@ -1,8 +1,9 @@
 package synthesizer;// TODO: Make sure to make this class a part of the synthesizer package
-// package <package name>;
 
 //TODO: Make sure to make this class and all of its methods public
 //TODO: Make sure to make this class extend AbstractBoundedQueue<t>
+// Compile Me. javac BoundedQueue.java AbstractBoundedQueue.java
+// ArrayRingBuffer.java
 public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
 
     /* Index for the next dequeue or peek. */
@@ -10,6 +11,9 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
 
     /* Index for the next enqueue. */
     private int _last;
+
+    /** The number of items stored in me. */
+    private int _fillCount;
 
     /* Array for storing the buffer data. */
     private T[] rb;
@@ -26,6 +30,11 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         //       this.capacity should be set appropriately. Note that the local variable
         //       here shadows the field we inherit from AbstractBoundedQueue, so
         //       you'll need to use this.capacity to set the capacity.
+    }
+
+    /** Returns whether I am empty. */
+    public boolean isEmpty() {
+        return _fillCount == 0;
     }
 
     /**
