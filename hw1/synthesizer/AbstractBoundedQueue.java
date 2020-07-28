@@ -2,18 +2,18 @@ package synthesizer;
 
 public abstract class AbstractBoundedQueue<T> implements BoundedQueue<T> {
     /** Returns the number of items I can hold. */
-    protected int _capacity;
+    protected int capacity;
 
     /** Returns the number of items I currently hold. */
-    protected int _fillCount;
+    protected int fillCount;
 
     /** Returns the number of items I can hold. */
     public int capacity() {
-        return _capacity;
+        return capacity;
     }
 
     /** Returns the number of items I currently hold. */
     public int fillCount() {
-        return _fillCount;
+        return fillCount;
     }
 }

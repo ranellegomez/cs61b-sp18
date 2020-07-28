@@ -7,18 +7,18 @@ import java.util.Iterator;
 //TODO: Make sure to make this class extend AbstractBoundedQueue<t>
 // Compile Me. javac BoundedQueue.java AbstractBoundedQueue.java
 // ArrayRingBuffer.java
-public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Iterable<T> {
+public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
 
-    /* Index for the next dequeue or peek. */
-    private int _first;            // index for the next dequeue or peek
+    /** Index for the next dequeue or peek. */
+    private int _first;
 
-    /* Index for the next enqueue. */
+    /** Index for the next enqueue. */
     private int _last;
 
-    /** The number of items stored in me. */
-    private int _fillCount;
+    /** The number of items stored in me.
+    private int _fillCount; */
 
-    /* Array for storing the buffer data. */
+    /** Array for storing the buffer data. */
     private T[] rb;
 
     /**
@@ -27,26 +27,9 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
     public ArrayRingBuffer(int capacity) {
         _first = 0;
         _last = 0;
-        _fillCount = 0;
-        _capacity = capacity;
-        rb = (T[]) new Object[_capacity];
-        // TODO: Create new array with capacity elements.
-        //       first, last, and fillCount should all be set to 0.
-        //       this.capacity should be set appropriately. Note that the local variable
-        //       here shadows the field we inherit from AbstractBoundedQueue, so
-        //       you'll need to use this.capacity to set the capacity.
-    }
-
-    /** Returns whether I am empty. */
-    @Override
-    public boolean isEmpty() {
-        return _fillCount == 0;
-    }
-
-    /** Returns whether I am full. */
-    @Override
-    public boolean isFull() {
-        return _fillCount == _capacity;
+        fillCount = 0;
+        capacity = capacity;
+        rb = (T[]) new Object[capacity];
     }
 
     /**
@@ -55,7 +38,6 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
      * covered Monday.
      */
     public void enqueue(T x) {
-        // TODO: Enqueue the item. Don't forget to increase fillCount and update last.
         if (isFull()) {
             throw new RuntimeException("Ring buffer overflow.");
         }
@@ -63,7 +45,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
         if (_last == rb.length) {
             _last = 0;
         }
-        _fillCount++;
+        fillCount++;
     }
 
     /**
@@ -72,7 +54,6 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
      * covered Monday.
      */
     public T dequeue() {
-        // TODO: Dequeue the first item. Don't forget to decrease fillCount and update
         if (isEmpty()) {
             throw new RuntimeException("Ring buffer underflow.");
         }
@@ -80,20 +61,8 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
         if (_first == rb.length) {
             _first = 0;
         }
-        _fillCount--;
+        fillCount--;
         return oldFirst;
-    }
-
-    /** Returns the number of items I can hold. */
-    @Override
-    public int capacity() {
-     return _capacity;
-    }
-
-    /** Returns the number of items I currently hold. */
-    @Override
-    public int fillCount() {
-        return _fillCount;
     }
 
     /**
@@ -104,7 +73,6 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
             throw new RuntimeException("Underflow.");
         }
         return rb[_first];
-        // TODO: Return the first item. None of your instance variables should change.
     }
 
     @Override
@@ -114,12 +82,12 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
 
             @Override
             public boolean hasNext() {
-                return currentIndex < _fillCount;
+                return currentIndex < fillCount;
             }
 
             @Override
             public T next() {
-                int nextIndex = (currentIndex + _first) % _capacity;
+                int nextIndex = (currentIndex + _first) % capacity;
                 T result = rb[nextIndex];
                 currentIndex++;
                 return result;
