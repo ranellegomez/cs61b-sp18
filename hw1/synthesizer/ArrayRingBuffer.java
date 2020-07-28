@@ -29,6 +29,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
         _last = 0;
         _fillCount = 0;
         _capacity = capacity;
+        rb = (T[]) new Object[_capacity];
         // TODO: Create new array with capacity elements.
         //       first, last, and fillCount should all be set to 0.
         //       this.capacity should be set appropriately. Note that the local variable
