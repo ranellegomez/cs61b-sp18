@@ -42,6 +42,11 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
         return _fillCount == 0;
     }
 
+    /** Returns whether I am full. */
+    public boolean isFull() {
+        return _fillCount == _capacity;
+    }
+
     /**
      * Adds x to the end of the ring buffer. If there is no room, then
      * throw new RuntimeException("Ring buffer overflow"). Exceptions
@@ -49,7 +54,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
      */
     public void enqueue(T x) {
         // TODO: Enqueue the item. Don't forget to increase fillCount and update last.
-        if (_fillCount == _capacity) {
+        if (isFull()) {
             throw new RuntimeException("Ring buffer overflow.");
         }
         rb[_last++] = x;
