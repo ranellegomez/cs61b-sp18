@@ -79,6 +79,9 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
      * Return oldest item, but don't remove it.
      */
     public T peek() {
+        if (_fillCount == 0) {
+            throw new RuntimeException("Underflow.");
+        }
         return rb[_first];
         // TODO: Return the first item. None of your instance variables should change.
     }
@@ -86,22 +89,19 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
     @Override
     public Iterator<T> iterator() {
         Iterator<T> it = new Iterator<T>() {
-
             private int currentIndex = 0;
 
             @Override
             public boolean hasNext() {
-                return currentIndex < _capacity && rb[currentIndex] != null;
+                return currentIndex < _fillCount;
             }
-
+            
             @Override
             public T next() {
-                return rb[currentIndex++];
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
+                int nextIndex = (currentIndex + _first) % _capacity;
+                T result = rb[nextIndex];
+                currentIndex++;
+                return result;
             }
         };
         return it;
