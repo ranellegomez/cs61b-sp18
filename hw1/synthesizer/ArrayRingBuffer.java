@@ -38,11 +38,13 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
     }
 
     /** Returns whether I am empty. */
+    @Override
     public boolean isEmpty() {
         return _fillCount == 0;
     }
 
     /** Returns whether I am full. */
+    @Override
     public boolean isFull() {
         return _fillCount == _capacity;
     }
@@ -82,6 +84,18 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
         return oldFirst;
     }
 
+    /** Returns the number of items I can hold. */
+    @Override
+    public int capacity() {
+     return _capacity;
+    }
+
+    /** Returns the number of items I currently hold. */
+    @Override
+    public int fillCount() {
+        return _fillCount;
+    }
+
     /**
      * Return oldest item, but don't remove it.
      */
@@ -113,6 +127,5 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
         };
         return it;
     }
-    // TODO: When you get to part 5, implement the needed code to support iteration.
 }
 
