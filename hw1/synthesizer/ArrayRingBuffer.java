@@ -47,7 +47,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
      */
     public void enqueue(T x) {
         // TODO: Enqueue the item. Don't forget to increase fillCount and update last.
-        if (_last == _first) {
+        if (_fillCount == _capacity) {
             throw new RuntimeException("Ring buffer overflow.");
         }
         rb[_last++] = x;
@@ -79,7 +79,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
      * Return oldest item, but don't remove it.
      */
     public T peek() {
-        if (_fillCount == 0) {
+        if (isEmpty()) {
             throw new RuntimeException("Underflow.");
         }
         return rb[_first];
@@ -95,7 +95,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
             public boolean hasNext() {
                 return currentIndex < _fillCount;
             }
-            
+
             @Override
             public T next() {
                 int nextIndex = (currentIndex + _first) % _capacity;
