@@ -3,21 +3,21 @@ public class ArrayDeque<T> {
     T [] _items;
 
     /** The size of this. */
-    int _size = 0;
+    private int _size = 0;
 
     /** The index of where the first item is to be inserted when addFirst is
      called. */
-    int _nextFirst = 0;
+    private int _nextFirst = 0;
 
     /** The index of where the last item is to be inserted when nextLast is
      called. */
-    int _nextLast = 1;
+    private int _nextLast = 1;
 
     /** The total number of elements (including nulls) in _items. */
-    int _instantiatedSize = 8;
+    private int _instantiatedSize = 8;
 
     public ArrayDeque() {
-        _items = (T[]) new Object[8];
+        _items = (T[]) new Object[_instantiatedSize];
     }
 
     /** Adds an item of type T to the front of the deque. */
