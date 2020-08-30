@@ -24,64 +24,26 @@ public class NBody {
      *                   String img)
      */
     public static Planet[] readPlanets(String filePath) {
-        try {
-            int i = 0;
-            int lineNumber = 2;
-            String fileLine = Files.readAllLines(Paths.get(filePath)).get(lineNumber);
-            HashMap<String, Planet> planetHashMap = new HashMap<>();
-            Set<String> planetNamesOrderings = new LinkedHashSet<>();
+        In fileContent = new In(filePath);
 
-            while (fileLine != null && isNumeric((fileLine.trim().split(
-                    "\\s+")[0]))) {
-                fileLine = fileLine.trim();
-                String[] planetInfo = fileLine.split("\\s+");
+        int numBodies = fileContent.readInt();
 
-                if (planetInfo.length == 6) {
-                    Planet p = new Planet(Double.parseDouble(planetInfo[0]),
-                                          Double.parseDouble(planetInfo[1]),
-                                          Double.parseDouble(planetInfo[2]),
-                                          Double.parseDouble(planetInfo[3]),
-                                          Double.parseDouble(planetInfo[4]),
-                                          planetInfo[5]);
-                    planetNamesOrderings.add(p.imgFileName);
-                    if (planetHashMap.containsKey(p.imgFileName)) {
-                        planetHashMap.replace(p.imgFileName, p);
-                    } else {
-                        planetHashMap.put(p.imgFileName, p);
-                    }
-                }
-                try {
-                    fileLine =
-                            Files.readAllLines(Paths.get(filePath)).get(lineNumber++);
-                } catch(IndexOutOfBoundsException e) {
-                    break;
-                }
-            }
-            Planet[] planetArray =
-                    new Planet[planetHashMap.values().toArray().length];
-            for (String planetName : planetNamesOrderings) {
-                for (Planet p: planetHashMap.values()) {
-                    if (planetName.equals(p.imgFileName)) {
-                        planetArray[i++] = p;
-                    }
-                }
-            }
-            return planetArray;
-        } catch (IOException | IndexOutOfBoundsException e) {
-            return null;
-        }
-    }
+        /** Advances the iterator past line 1. */
+        fileContent.readDouble();
 
-    private static boolean isNumeric(String strNum) {
-        if (strNum == null) {
-            return false;
+        Planet[] bodyArray = new Planet[numBodies];
+
+        for (int i = 0; i < numBodies; i+= 1) {
+            double xxPos = fileContent.readDouble();
+            double yyPos = fileContent.readDouble();
+            double xxVel = fileContent.readDouble();
+            double yyVel = fileContent.readDouble();
+            double mass = fileContent.readDouble();
+            String imgFileName = fileContent.readString();
+            bodyArray[i] = new Planet(xxPos, yyPos, xxVel, yyVel, mass,
+                                    imgFileName);
         }
-        try {
-            double d = Double.parseDouble(strNum);
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-        return true;
+        return bodyArray;
     }
 
     /** Stores the first two command-line arguments respectively as doubles
