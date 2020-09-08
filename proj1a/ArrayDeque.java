@@ -72,25 +72,20 @@ public class ArrayDeque<T> {
 
 
     /** Prints the items in the deque from first to last, separated by a
-     * space. */ //FIXME
+     * space. */
     public void printDeque() {
-        for (int i = _nextFirst + 1; i < _items.length; i += 1) {
-            if (_items[i] != null) {
-                System.out.println(_items[i]);
-            }
+        for (int i = 0; i < size(); i++) {
+            System.out.println(get(i));
         }
-        for (int j = 0; j < _nextFirst + 1; j += 1) {
-            if (_items[j] != null) {
-                System.out.println(_items[j]);
-            }
-        }
-
     }
 
     /** Removes and returns the item at the front of the deque. If no such
      * item exists, returns null.
      */
     public T removeFirst() {
+        if (isEmpty()) {
+            return null;
+        }
         if (isDownsizable()) {
             resize(_items.length / 2);
         }
@@ -105,6 +100,9 @@ public class ArrayDeque<T> {
      * item exists, returns null.
      */
     public T removeLast() {
+        if (isEmpty()) {
+            return null;
+        }
         if (isDownsizable()) {
             resize(_items.length / 2);
         }
@@ -145,7 +143,7 @@ public class ArrayDeque<T> {
 
     /** Return the value of P modulo the size. */
     private int modulo(int p) {
-        return (p < 0) ? ((p + _items.length) % _items.length) :
-                (p % _items.length);
+        return (p < 0) ? ((p + _items.length) % _items.length)
+                : (p % _items.length);
     }
 }
