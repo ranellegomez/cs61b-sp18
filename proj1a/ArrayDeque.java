@@ -1,6 +1,6 @@
 public class ArrayDeque<T> {
     /** The array containing the items of this ArrayDeque. */
-    T [] _items;
+    private T [] _items;
 
     /** The size of this. */
     private int _size;
@@ -120,12 +120,11 @@ public class ArrayDeque<T> {
      * the deque!
      */
     public T get(int index) {
-        T result;
-        int k = modulo(_nextFirst + 1);
-
-        for (int i = 0; i < index; i++) {
-            k = modulo(k + i);
+        if (index >= size()) {
+            return null;
         }
+        T result;
+        int k = modulo(_nextFirst + 1 + index);
         result = _items[k];
         return result;
     }
