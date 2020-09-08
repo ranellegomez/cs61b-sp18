@@ -52,7 +52,7 @@ public class ArrayDeque<T> {
 
     /** Returns whether our usage factor < 25% and items.length >= 16. */
     private boolean isDownsizable() {
-        return (_items.length >= 16) && ((size()/_items.length) > 0.25);
+        return (_items.length >= 16) && ((size()) < (0.25 * _items.length));
     }
 
     /** Returns the number of items in the deque. */
@@ -133,13 +133,13 @@ public class ArrayDeque<T> {
      */
     private void resize(int capacity) {
         T[] temp = (T[]) new Object[capacity];
-        int j = 0;
 
-        for (int i = modulo(_nextFirst + 1); i != _nextLast; i = modulo(i + 1)) {
-            temp[j++] = _items[i];
+        for (int i = 0; i < size(); i++) {
+            temp[i] = _items[modulo(modulo(_nextFirst + 1) + i)];
         }
+        _items = null;
         _items = temp;
-        _nextFirst = _items.length - 1;
+        _nextFirst = capacity - 1;
         _nextLast = size();
     }
 
