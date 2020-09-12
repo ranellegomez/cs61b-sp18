@@ -7,12 +7,11 @@ public interface Deque<T> {
     void addLast(T item);
 
     /** Returns true if empty; false otherwise. */
-    void isEmpty(T item);
+    boolean isEmpty();
 
 
     /** Returns the number of items in this deque. */
     int size();
-
 
     /** Prints each item of this deque line-by-line starting with the first
      * element.
@@ -30,6 +29,5 @@ public interface Deque<T> {
 
     /** Returns the ith item of this deque. */
     T get(int i);
-
-
 }
+
