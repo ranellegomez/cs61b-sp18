@@ -1,4 +1,7 @@
 import org.junit.Test;
+
+import java.util.Deque;
+
 import static org.junit.Assert.*;
 
 public class TestPalindrome {
@@ -6,7 +9,7 @@ public class TestPalindrome {
 
     @Test
     public void testWordToDeque() {
-        Deque d = palindrome.wordToDeque("persiflage");
+        Deque<Character> d = palindrome.wordToDeque("persiflage");
         String actual = "";
         for (int i = 0; i < "persiflage".length(); i++) {
             actual += d.removeFirst();
