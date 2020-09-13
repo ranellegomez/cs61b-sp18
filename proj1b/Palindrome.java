@@ -22,6 +22,9 @@ public class Palindrome {
         return word.equals(reverse.toString());
     }
 
+    /** Given a comperator COMP and a String S, returns true if this is a
+     * palindrome according to comp; false otherwise.
+     */
     public Boolean isPalindrome(String s, CharacterComparator comp) {
         String revS = new StringBuilder(s).reverse().toString();
         for (int i = 0; i < s.length(); i++) {
