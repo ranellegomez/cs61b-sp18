@@ -1,7 +1,8 @@
 /** @Source: https://www.javatpoint.com/how-to-reverse-string-in-java */
 public class Palindrome {
 
-    /** Takes a word and returns a deque with all the chars in that word. */
+    /** Takes a String WORD and returns a deque with all the chars in that
+     * word. */
     public Deque<Character> wordToDeque(String word) {
         Deque<Character> result = new ArrayDeque<>();
         for (int i = 0; i < word.length(); i++) {

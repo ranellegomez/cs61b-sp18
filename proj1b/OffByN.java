@@ -1,6 +1,11 @@
 public class OffByN implements CharacterComparator {
+
+    /** This OffByN's unique number that represents how many characters away
+     * from two characters can be from one another.
+     */
     private int _n;
 
+    /** This OffByN's constructor which binds _n to the user-inputted int N. */
     public OffByN(int n) {
         _n = n;
     }
