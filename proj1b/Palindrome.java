@@ -11,7 +11,7 @@ public class Palindrome {
     }
 
     /** Takes a word and returns true if it a palindrome; false otherwise. */
-    public Boolean isPalindrome(String word) {
+    public boolean isPalindrome(String word) {
         if (word == null) {
             /** Unsure about this. Need to verify. */
             return false;
