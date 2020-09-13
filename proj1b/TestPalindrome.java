@@ -1,3 +1,4 @@
+import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -5,7 +6,8 @@ import static org.junit.Assert.*;
 public class TestPalindrome {
 
     static Palindrome palindrome = new Palindrome();
-    static OffByOne off = new OffByOne();
+    static OffByOne offOne = new OffByOne();
+    static OffByN offFive = new OffByN(5);
 
     @Test
     public void testWordToDeque() {
@@ -33,8 +35,11 @@ public class TestPalindrome {
 
     @Test
     public void testIsPalindromeComp() {
-        assertTrue(palindrome.isPalindrome("ab", off));
-        assertFalse(palindrome.isPalindrome("an", off));
-        assertFalse(palindrome.isPalindrome("ac", off));
+        assertTrue(palindrome.isPalindrome("ab", offOne));
+        assertFalse(palindrome.isPalindrome("an", offOne));
+        assertFalse(palindrome.isPalindrome("ac", offOne));
+        assertTrue(palindrome.isPalindrome("detrude", offOne));
+
+        assertTrue(palindrome.isPalindrome("binding", offFive));
     }
 }

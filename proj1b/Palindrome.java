@@ -13,6 +13,7 @@ public class Palindrome {
     /** Takes a word and returns true if it a palindrome; false otherwise. */
     public Boolean isPalindrome(String word) {
         if (word == null) {
+            /** Unsure about this. Need to verify. */
             return false;
         }
         if (word.length() == 0 || word.length() == 1) {
@@ -22,13 +23,17 @@ public class Palindrome {
         return word.equals(reverse.toString());
     }
 
-    /** Given a comperator COMP and a String S, returns true if this is a
+    /** Given a comparator COMP and a String S, returns true if this is a
      * palindrome according to comp; false otherwise.
      */
-    public Boolean isPalindrome(String s, CharacterComparator comp) {
+    public boolean isPalindrome(String s, CharacterComparator comp) {
+        if (s.length() == 0 || s.length() == 1) {
+            return true;
+        }
         String revS = new StringBuilder(s).reverse().toString();
         for (int i = 0; i < s.length(); i++) {
-            if (!comp.equalChars(s.charAt(i), revS.charAt(i))) {
+            if (!comp.equalChars(s.charAt(i), revS.charAt(i))
+                    && i != Math.floorDiv(s.length(), 2)) {
                 return false;
             }
         }
