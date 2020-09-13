@@ -1,8 +1,12 @@
-/** @Source: https://www.javatpoint.com/how-to-reverse-string-in-java */
+/**
+ * @Source: https://www.javatpoint.com/how-to-reverse-string-in-java
+ */
 public class Palindrome {
 
-    /** Takes a String WORD and returns a deque with all the chars in that
-     * word. */
+    /**
+     * Takes a String WORD and returns a deque with all the chars in that
+     * word.
+     */
     public Deque<Character> wordToDeque(String word) {
         Deque<Character> result = new ArrayDeque<>();
         for (int i = 0; i < word.length(); i++) {
@@ -11,7 +15,9 @@ public class Palindrome {
         return result;
     }
 
-    /** Takes a word and returns true if it a palindrome; false otherwise. */
+    /**
+     * Takes a word and returns true if it a palindrome; false otherwise.
+     */
     public boolean isPalindrome(String word) {
         if (word == null) {
             /** Unsure about this. Need to verify. */
@@ -24,7 +30,8 @@ public class Palindrome {
         return word.equals(reverse.toString());
     }
 
-    /** Given a comparator COMP and a String S, returns true if this is a
+    /**
+     * Given a comparator COMP and a String S, returns true if this is a
      * palindrome according to comp; false otherwise.
      */
     public boolean isPalindrome(String s, CharacterComparator comp) {
