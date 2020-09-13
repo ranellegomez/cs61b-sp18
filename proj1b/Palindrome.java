@@ -1,4 +1,5 @@
 /**
+ * (C) 2020 Ranelle Gomez
  * @Source: https://www.javatpoint.com/how-to-reverse-string-in-java
  */
 public class Palindrome {
