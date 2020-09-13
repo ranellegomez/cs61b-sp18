@@ -28,6 +28,15 @@ public class TestPalindrome {
     @Test
     public void testIsPalindromeComp() {
         assertTrue(palindrome.isPalindrome("ab", off));
+        assertFalse(palindrome.isPalindrome("an", off));
         assertFalse(palindrome.isPalindrome("ac", off));
+    }
+
+    public static void main(String[] args) {
+        TestPalindrome palTest = new TestPalindrome();
+
+        palTest.testWordToDeque();
+        palTest.testIsPalindrome();
+        palTest.testIsPalindromeComp();
     }
 }
