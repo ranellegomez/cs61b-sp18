@@ -5,6 +5,7 @@ import java.util.Deque;
 import static org.junit.Assert.*;
 
 public class TestPalindrome {
+
     static Palindrome palindrome = new Palindrome();
     static OffByOne off = new OffByOne();
 
@@ -30,13 +31,5 @@ public class TestPalindrome {
         assertTrue(palindrome.isPalindrome("ab", off));
         assertFalse(palindrome.isPalindrome("an", off));
         assertFalse(palindrome.isPalindrome("ac", off));
-    }
-
-    public static void main(String[] args) {
-        TestPalindrome palTest = new TestPalindrome();
-
-        palTest.testWordToDeque();
-        palTest.testIsPalindrome();
-        palTest.testIsPalindromeComp();
     }
 }
