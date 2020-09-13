@@ -1,5 +1,3 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
 
 /** @Source: https://www.javatpoint.com/how-to-reverse-string-in-java */
 public class Palindrome {
@@ -8,7 +6,7 @@ public class Palindrome {
     public Deque<Character> wordToDeque(String word) {
         Deque<Character> result = new ArrayDeque<>();
         for (int i = 0; i < word.length(); i++) {
-            result.add(word.charAt(i));
+            result.addFirst(word.charAt(i));
         }
         return result;
     }
