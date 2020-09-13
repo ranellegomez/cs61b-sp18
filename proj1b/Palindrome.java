@@ -13,7 +13,7 @@ public class Palindrome {
         return result;
     }
 
-    /** Takes a word and returns true if it a polindrome; false otherwise. */
+    /** Takes a word and returns true if it a palindrome; false otherwise. */
     public Boolean isPalindrome(String word) {
         if (word == null) {
             return false;
