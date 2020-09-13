@@ -1,8 +1,6 @@
 import org.junit.Test;
-
-
-
 import static org.junit.Assert.*;
+
 
 public class TestPalindrome {
 
@@ -17,6 +15,13 @@ public class TestPalindrome {
             actual += d.removeFirst();
         }
         assertEquals("persiflage", actual);
+
+        Deque x = palindrome.wordToDeque("hello world");
+        String actual1 = "";
+        for (int i = 0; i < "hello world".length(); i++) {
+            actual1 += x.removeFirst();
+        }
+        assertEquals("hello world", actual1);
     }
 
     @Test

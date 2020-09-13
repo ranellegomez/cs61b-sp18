@@ -1,4 +1,3 @@
-
 /** @Source: https://www.javatpoint.com/how-to-reverse-string-in-java */
 public class Palindrome {
 
