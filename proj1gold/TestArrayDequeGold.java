@@ -53,6 +53,27 @@ public class TestArrayDequeGold {
         }
 
     }
+
+    @Test
+    public void testRemoveFirst() {
+        StudentArrayDeque<Integer> actual = new StudentArrayDeque<>();
+        ArrayDequeSolution<Integer> expected = new ArrayDequeSolution<>();
+        String calls = "\n";
+        for (int i = 0; i < 1000; i++) {
+            int random = StdRandom.uniform(1000);
+            actual.addFirst(random);
+            expected.addFirst(random);
+            calls += "actual.First(" + random + ")" + "\n" + "expected"
+                    + ".addFirst(" + random + ")" + "\n";
+        }
+        for (int i = 0; i < 1000; i++) {
+            calls += "assertEquals(" + "expected.removeFirst(), " +
+                    "actual.removeFirst())" + "\n";
+            assertEquals(calls, expected.removeFirst(),
+                         actual.removeFirst());
+        }
+
+    }
 }
 
 
