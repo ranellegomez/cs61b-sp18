@@ -37,23 +37,23 @@ public class TestArrayDequeGold {
     public void testRemoveLast() {
         StudentArrayDeque<Integer> actual = new StudentArrayDeque<>();
         ArrayDequeSolution<Integer> expected = new ArrayDequeSolution<>();
-
+        String calls = "\n";
         for (int i = 0; i < 1000; i++) {
             int random = StdRandom.uniform(1000);
             actual.addLast(random);
             expected.addLast(random);
-
+            calls += "actual.addLast(" + random + ")" + "\n" + "expected"
+                    + ".addLast(" + random + ")" + "\n";
         }
         for (int i = 0; i < 1000; i++) {
-            assertEquals("removeLast() " + i, expected.removeLast(),
+            calls += "assertEquals(" + "expected.removeLast(), " +
+                    "actual.removeLast())" + "\n";
+            assertEquals(calls, expected.removeLast(),
                          actual.removeLast());
         }
 
     }
-
-    /** This main method is optional. */
-    public static void main(String[] args) {
-        jh61b.junit.TestRunner.runTests(AssertEqualsStringDemo.class);
-    }
 }
+
+
 
