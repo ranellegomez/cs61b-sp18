@@ -2,7 +2,9 @@ package synthesizer;// TODO: Make sure to make this class a part of the synthesi
 //package <package name>;
 
 import edu.princeton.cs.algs4.StdAudio;
+import edu.princeton.cs.algs4.StdRandom;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,20 +39,19 @@ public class GuitarString {
         // TODO: Dequeue everything in the buffer, and replace it with random numbers
         //       between -0.5 and 0.5. You can get such a number by using:
         //       double r = Math.random() - 0.5;
-        //
-        //       Make sure that your random numbers are different from each other.
-        double r = Math.random() - 0.5;
-        Set random = new HashSet();
-        while (random.size() < buffer.capacity()) {
-            random.add(r);
-            r = Math.random() - 0.5;
+        ArrayList<Double> randoms = new ArrayList<Double>();
+        int i = 0;
+        while (randoms.size() < buffer.capacity()) {
+            double randomDouble = StdRandom.uniform(-0.5, 0.5);
+            if (!randoms.contains(randomDouble)) {
+                randoms.add(randomDouble);
+            }
         }
         while (!buffer.isEmpty()) {
             buffer.dequeue();
         }
         while (!buffer.isFull()) {
-            Object elem = random.iterator().next();
-            buffer.enqueue((Double) elem);
+            buffer.enqueue(randoms.get(i++));
         }
     }
 
